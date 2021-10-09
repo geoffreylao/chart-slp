@@ -35,8 +35,8 @@ class App extends Component {
 
         <div className="container-fluid">
           <Switch>
-            <Route exact path={["/", "/charts"]} component={MatchStats} />
-            <Route exact path="/add" component={AddMatch} />
+            <Route exact path={"/charts"} component={MatchStats} />
+            <Route exact path={["/", "/add"]} component={AddMatch} />
           </Switch>
         </div>
       </div>
