@@ -1,0 +1,327 @@
+/* HTML */
+
+img-fluid {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Responsive Charts */
+.chartDiv {
+  height: 100%;
+}
+
+.chartDiv div {
+  height: 100%;
+}
+
+/* Search Params Form */
+#searchParams {
+  text-align: center;
+  margin: 0;
+  font-size: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #6b6b6b;
+}
+
+.card-body {
+  padding: 5px 15px 15px 15px;
+}
+
+.formCol {
+  padding-top: 10px;
+  margin: auto;
+}
+
+/* Summary */
+
+.sectionH2 {
+  text-align: center;
+  font-size: 26px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #6b6b6b;
+}
+
+.sumCol {
+  margin: auto;
+  text-align: center;
+  display: inline-block;
+  height: 400px;
+}
+
+/* Character Portraits */
+
+@media screen and (max-width: 320px) {
+  #imgContainer,
+  #imgContainer2 {
+    width: 100%;
+    height: 10px;
+    margin: 0 auto;
+    position: relative;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 576px) {
+  #imgContainer,
+  #imgContainer2 {
+    width: 80%;
+    height: 10px;
+    margin: 0 auto;
+    position: relative;
+  }
+}
+
+@media screen and (min-width: 577px) and (max-width: 990px) {
+  #imgContainer,
+  #imgContainer2 {
+    width: 50%;
+    height: 10px;
+    margin: 0 auto;
+    position: relative;
+  }
+}
+
+#imgContainer img {
+  border-style: solid;
+  border-color: #980000;
+  position: absolute;
+  scale: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#imgContainer2 img {
+  border-style: solid;
+  border-color: #000097;
+  position: absolute;
+  top: 0;
+  left: 0;
+  scale: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#tagText {
+  z-index: 100;
+  position: absolute;
+  color: #f3ede2;
+  font-size: 29px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  left: 60px;
+  top: 270px;
+}
+
+#sumCard {
+  margin: 10px; /* Added */
+  float: none; /* Added */
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #6b6b6b;
+  height: 95%;
+}
+
+/* Character Usage */
+#pie1 {
+  height: 610px;
+}
+
+#pie2 {
+  height: 610px;
+}
+
+#bigbar {
+  height: 660px;
+}
+
+/* Openings */
+.openingCols {
+  height: 280px;
+}
+
+/* Two Bar Charts */
+.twoBar {
+  height: 250px;
+}
+
+/* Vertical Large Bar Charts */
+.vertbigbar {
+  height: 680px;
+}
+
+#radiobuttons {
+  text-align: center;
+  width: 100%;
+}
+
+.labelDiv {
+  padding-bottom: 5px;
+}
+
+.movesHR {
+  margin-top: 100px;
+}
+
+/* Medium Vertical Bars */
+.medbar {
+  height: 400px;
+}
+
+/* Four Bar */
+.fourbar {
+  height: 550px;
+}
+
+/* Loading Spinner */
+#outer {
+  width: 100%;
+  text-align: center;
+}
+
+#inner {
+  display: inline-block;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+}
+
+h6 {
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #6b6b6b;
+  text-align: center;
+}
+
+/* No Matches */
+.noMatches {
+  text-align: center;
+}
+
+a {
+  color: #f19f9f;
+  background-color: transparent;
+}
+
+a:hover {
+  color: #ff4d4d;
+  background-color: transparent;
+}
+
+/* Home Page */
+.homepage-text {
+  font-family: 'Montserrat';
+}
+
+#title {
+  background-color: #fe767a;
+  color: white;
+  padding-top: 20px;
+}
+
+.titleCol {
+  height: 350px;
+}
+
+.title-logo {
+  margin: auto;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+  height: 100%;
+}
+
+.chartslp-logo {
+  width: 40%;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+.title-text {
+  font-weight: 600;
+}
+
+h1 {
+  padding-bottom: 25px;
+}
+
+.btn {
+  width: 150px;
+  margin: 10px;
+  font-family: 'Maven Pro';
+  font-size: 0.85rem;
+}
+
+@media (max-width: 1028px) {
+  #title {
+    text-align: center;
+  }
+
+  .titleTextCol {
+    height: 420px;
+  }
+}
+
+/* How To */
+#how-to-use {
+  background-color: #64727f;
+  color: #c0c0c0;
+  padding-top: 20px;
+}
+
+.how-to-h1 {
+  font-weight: bold;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.how-to-text {
+  font-weight: 600;
+  padding: 0 30px 0 30px;
+}
+
+/* Upload */
+#upload {
+  background-color: #6db08f;
+  color: white;
+  padding-top: 20px;
+}
+
+.upload-h1 {
+  text-align: center;
+}
+
+.chartslp-uploader-logo {
+  width: 30%;
+  float: left;
+  padding-right: 20px;
+  padding-left: 10px;
+}
+
+.uploaderText {
+  padding-top: 20px;
+}
+
+.singleUploadText {
+  height: 30px;
+}
+
+.uploadCol {
+  height: 250px;
+}
+
+/* Footer */
+.footer-logo {
+  display: inline-block;
+  padding: 1%;
+  font-size: 2rem;
+  padding-bottom: 0;
+}
+
+hr {
+  margin-top: 0;
+}

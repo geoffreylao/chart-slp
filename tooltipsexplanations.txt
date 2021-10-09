@@ -1,0 +1,82 @@
+Chart Tooltips
+==============
+
+Character Winrate: Winrate playing as Character
+
+Vs Character Winrate: Winrate playing against Character
+
+Stage Winrate: Winrate on Stage
+
+Neutral Win: When player lands a move that does damage while neither player has an active punish
+
+Counter Hit: When player lands a move that does damage while the other player has an active punish
+
+Trade: When punishes from both players start on the same frame
+
+First Bloods: First player to land a move in a match
+
+Average KO Percent: Lower is better
+
+Openings per KO: Lower is better
+
+Successful Conversion Percent: Success rate on converting an initial hit into another hit
+
+Average Damage Per Opening: Higher is better
+
+Highest Damage Punish: Most damage in one punish
+
+Lowest % Kill: Earliest stock taken
+
+Highest % Kill: Latest stock taken
+
+Inputs Per Minute: Includes analog inputs from both sticks
+
+Digital IPM: Only includes digital inputs from buttons
+
+Successful L Cancel %: Successful L Cancel rate
+
+Action Counts: Tally of misc actions
+
+Move Counts: Tally of move uses in various categories
+
+Rival: Opponent played the Most
+
+Winrate over Match Duration: Observes winrate against evenly split time ranges
+
+Character % of Matches ending in LRAStart: Displays rate of which matches characters are selected end in LRAStart
+
+Home/Upload Page
+================
+About - ( x games uploaded!)
+
+Simple and interactable charts for analyzing your {Slippi Online} games
+
+This Website is inspired by {Slippi Stats Online} and {Slippi Stats Web} if you like what you see here please give them some love!
+
+Powered by Chart.js + React + Slippi-js
+
+{Source Code}
+
+How To Use 
+
+1. Find your Slippi Replay Root Directory. By default these are stored in the C:\Users\[username]\Documents\Slippi directory. 
+
+2. I recommended to '.zip' your files to shorten your upload time considerably. Right click your containing folder and under the 'Send To' option, click 'Compressed (zipped) folder'
+or use your favorite archiver.
+
+3. Click on 'Browse...' and select your .slp files and click the upload button
+
+4. Your files will begin to upload. Please leave the page open until the upload completes and avoid uploading again until the first upload finishes
+
+5. Once the upload is complete you can now generate your charts. Click on the 'Generate Charts' button at the top of the page to be directed to the charts page
+
+6. On the charts page, enter your own connect code. This is the code you give to others when using direct connect on Slippi Online. 
+
+7. Optionally, you may further filter your games by opponent, characters played as and/or against, stages played, complete games only, and only games played within a specified date ranges
+
+Contact
+If you run into any issues or would like to provide feedback, contact me at geoffreylao@outlook.complete
+
+If you are Leffen and viewing this website, please be nice ◕‿◕
+
+

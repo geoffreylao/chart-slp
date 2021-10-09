@@ -1,0 +1,39 @@
+{
+  "name": "js-mongodb",
+  "version": "1.0.0",
+  "description": "Node.js Restful CRUD API with Node.js, Express and MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "expres",
+    "mongodb",
+    "rest",
+    "api"
+  ],
+  "author": "geoff lao",
+  "license": "ISC",
+  "dependencies": {
+    "@slippi/slippi-js": "file:slippi-slippi-js-6.1.0.tgz",
+    "body-parser": "^1.19.0",
+    "co": "^4.6.0",
+    "connect-busboy": "0.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "fs-extra": "^9.1.0",
+    "mkdirp": "^1.0.4",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.3",
+    "path": "^0.12.7",
+    "rimraf": "^3.0.2",
+    "uuidv4": "^6.2.7"
+  },
+  "engines": {
+    "node": "14.17.0",
+    "npm": "6.14.13"
+  }
+}
