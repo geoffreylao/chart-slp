@@ -1954,7 +1954,7 @@ export default class MatchStats extends Component {
                       <input
                         name="isOnlyComplete"
                         type="checkbox"
-                        value={this.state.isOnlyComplete}
+                        checked={this.state.isOnlyComplete}
                         onChange={this.handleCheckChange}
                       />
                         &nbsp; Exclude games ending in LRA-Start
