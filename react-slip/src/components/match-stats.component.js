@@ -1590,7 +1590,7 @@ export default class MatchStats extends Component {
                 <Card id='sumCard'>
                   <h6>&nbsp;</h6>
                   <p>
-                    Try entering your rival's code in Search Params to see head to head stats!
+                    Try entering your rival's code as well to see head to head stats!
                   </p>
                 </Card>
               </div>
