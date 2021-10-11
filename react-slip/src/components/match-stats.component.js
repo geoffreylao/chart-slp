@@ -1852,6 +1852,7 @@ export default class MatchStats extends Component {
             <div className="noMatches">
             <p>Taking a long time to load your stats? Try further filtering your data such as only entering your main in Your Characters</p>
           </div>
+          <hr></hr>
           </div>
         )
       }
