@@ -1319,14 +1319,8 @@ exports.findAll = (req, res) => {
 
 exports.getTotal = (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
-  Match.aggregate([
-    [
-      {
-        '$count': 'matchId'
-      }
-    ]
-  ]).then(data => {
-    res.send(data)
+  Match.estimatedDocumentCount().then(data => {
+    res.send(data.toString())
   })
 }
 
