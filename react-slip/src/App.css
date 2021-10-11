@@ -4,6 +4,10 @@ img-fluid {
   image-rendering: -webkit-optimize-contrast;
 }
 
+body {
+  width: 100%;
+}
+
 /* Responsive Charts */
 .chartDiv {
   height: 100%;
@@ -312,6 +316,11 @@ h1 {
 
 .uploadCol {
   height: 250px;
+}
+
+.uploader-row {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 /* Footer */
