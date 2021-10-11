@@ -266,7 +266,7 @@ h1 {
   }
 
   .titleTextCol {
-    height: 420px;
+    height: 460px;
   }
 }
 
@@ -321,6 +321,7 @@ h1 {
 .uploader-row {
   padding-left: 20px;
   padding-right: 20px;
+  margin-right: 0;
 }
 
 /* Footer */
