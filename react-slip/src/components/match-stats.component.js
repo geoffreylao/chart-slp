@@ -2,6 +2,7 @@ import React, { Component } from "react"; //useState
 import MatchDataService from "../services/match.service";
 import ReactSpinner from 'react-bootstrap-spinner'
 import Select from 'react-select'
+import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 //import Alert from 'react-bootstrap/Alert'
 
 import 'react-dates/initialize';
@@ -926,6 +927,39 @@ function createSuccessWhiffBarChart(success, whiff, title, successLabel, whiffLa
 
 // }
 
+var chararr = [
+  "FOX","MARTH","JIGGLYPUFF","FALCO",
+  "SHEIK","CAPTAIN_FALCON","PEACH",
+  "ICE_CLIMBERS","PIKACHU","YOSHI","SAMUS",
+  "LUIGI","DR_MARIO",
+  "GANONDORF","MARIO",
+  "DONKEY_KONG","YOUNG_LINK","LINK","GAME_AND_WATCH",
+  "MEWTWO","ROY","PICHU","NESS","ZELDA",
+  "KIRBY","BOWSER"
+]
+
+var charpng = [
+  "Fox.png", "Marth.png", "Jigglypuff.png", "Falco.png",
+  "Sheik.png", "Captain Falcon.png", "Peach.png",
+  "Ice Climbers.png", "Pikachu.png", "Yoshi.png", "Samus.png",
+  "Luigi.png", "Dr. Mario.png",
+  "Ganondorf.png", "Mario.png",
+  "Donkey Kong.png", "Young Link.png", "Link.png", "Game & Watch.png",
+  "Mewtwo.png", "Roy.png", "Pichu.png","Ness.png", "Zelda.png",
+  "Kirby.png", "Bowser.png"
+]
+
+var characters = chararr.map((x,i) => ({
+  "value": x,
+  "label": <div><img src={`stock_icons/${charpng[i]}`} height="30px" width="30px" alt=""/> {charpng[i].split('.').slice(0, -1).join('.')}</div>
+}))
+
+function deleteByVal(obj, val) {
+  for (var key in obj) {
+      if (obj[key].value === val) delete obj[key];
+  }
+}
+
 export default class MatchStats extends Component {
   constructor(props) {
     super(props);
@@ -933,6 +967,7 @@ export default class MatchStats extends Component {
     this.searchCode = this.searchCode.bind(this);
     //this.onChangeOppCode = this.onChangeOppCode.bind(this);
     this.handleCheckChange = this.handleCheckChange.bind(this);
+    this.handleGlobalChange = this.handleGlobalChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.searchCodeVal = React.createRef();
     this.oppCodeVal = React.createRef();
@@ -940,6 +975,7 @@ export default class MatchStats extends Component {
     this.state = {
       // search params
       selectCharacters: [],
+      oppSelectCharacters: [],
       myCharValue: [],
       oppCharValue: [],
       selectStages: [],
@@ -960,39 +996,17 @@ export default class MatchStats extends Component {
 
       // moves chart buttons
       radio: 'Neutral Wins',
-      check: false
+      check: false,
+
+      global: false
     };
   }
 
   async getCharacters(){
-    let chararr = [
-      "FOX","MARTH","JIGGLYPUFF","FALCO",
-      "SHEIK","CAPTAIN_FALCON","PEACH",
-      "ICE_CLIMBERS","PIKACHU","YOSHI","SAMUS",
-      "LUIGI","DR_MARIO",
-      "GANONDORF","MARIO",
-      "DONKEY_KONG","YOUNG_LINK","LINK","GAME_AND_WATCH",
-      "MEWTWO","ROY","PICHU","NESS","ZELDA",
-      "KIRBY","BOWSER"
-    ]
-
-    let charpng = [
-      "Fox.png", "Marth.png", "Jigglypuff.png", "Falco.png",
-      "Sheik.png", "Captain Falcon.png", "Peach.png",
-      "Ice Climbers.png", "Pikachu.png", "Yoshi.png", "Samus.png",
-      "Luigi.png", "Dr. Mario.png",
-      "Ganondorf.png", "Mario.png",
-      "Donkey Kong.png", "Young Link.png", "Link.png", "Game & Watch.png",
-      "Mewtwo.png", "Roy.png", "Pichu.png","Ness.png", "Zelda.png",
-      "Kirby.png", "Bowser.png"
-    ]
-    
-    const characters = chararr.map((x,i) => ({
-      "value": x,
-      "label": <div><img src={`stock_icons/${charpng[i]}`} height="30px" width="30px" alt=""/> {charpng[i].split('.').slice(0, -1).join('.')}</div>
-    }))
-
-    this.setState({selectCharacters: characters})
+    this.setState({
+      selectCharacters: characters,
+      oppSelectCharacters: characters
+    })
   }
 
   async getStages(){
@@ -1015,7 +1029,12 @@ export default class MatchStats extends Component {
   }
 
   myCharChange(e){
-    this.setState({myCharValue: e})
+
+    this.setState(
+      {myCharValue: e}
+      
+      )
+      console.log(this.state.myCharValue)
   }
 
   myOppChange(e){
@@ -1054,6 +1073,12 @@ export default class MatchStats extends Component {
     })
   }
 
+  handleGlobalChange(e){
+    this.setState({
+      global: !this.state.global
+    })
+  }
+
   handleCheckChange(e){
     const target = e.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -1073,8 +1098,12 @@ export default class MatchStats extends Component {
       statsLoaded: "loading"
     });
 
-    let params = new URLSearchParams(`code=${mycode}`)
+    let params = new URLSearchParams()
     
+    if(mycode){
+      params.append(`code`, mycode)
+    }
+
     if(myoppcode){
       params.append('oppcode', myoppcode);
     }
@@ -1103,6 +1132,10 @@ export default class MatchStats extends Component {
       params.append('end', (this.state.endDate._d).toISOString())
     }
 
+    if(this.state.global){
+      params.append('global', true)
+    }
+
     MatchDataService.findByCode(params.toString())
       .then(response => {
 
@@ -1127,7 +1160,7 @@ export default class MatchStats extends Component {
   }
 
   render() {
-    const { statsLoaded, myStats } = this.state;
+    const { statsLoaded, myStats, global } = this.state;
 
     const renderStats = () => {
       if (statsLoaded === "loaded") {
@@ -1859,6 +1892,136 @@ export default class MatchStats extends Component {
       }
     };
     
+    const renderCodeForm = () => {
+      if(global){
+        return(
+          <Form.Row>
+          <Col sm={12} md={6} className="formCol">
+            <input                  
+              type="text"
+              className="form-control"
+              placeholder="Your Connect Code Ex: GEFF#353"
+              // value={"GEFF#353"}
+              ref={this.searchCodeVal}
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.searchCode();
+                }
+              }}
+              readOnly
+            />
+          </Col>
+          <Col sm={12} md={6} className="formCol">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Opponents Connect Code"
+              // value={oppCode}
+              ref={this.oppCodeVal}
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.searchCode();
+                }
+              }}
+              readOnly
+            />
+          </Col>
+        </Form.Row>
+        )
+      }
+      else{
+        return(
+          <Form.Row>
+          <Col sm={12} md={6} className="formCol">
+            <input                  
+              type="text"
+              className="form-control"
+              placeholder="Your Connect Code Ex: GEFF#353"
+              // value={"GEFF#353"}
+              ref={this.searchCodeVal}
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.searchCode();
+                }
+              }}
+              
+            />
+          </Col>
+          <Col sm={12} md={6} className="formCol">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Opponents Connect Code"
+              // value={oppCode}
+              ref={this.oppCodeVal}
+              onKeyPress={event => {
+                if (event.key === "Enter") {
+                  this.searchCode();
+                }
+              }}
+            />
+          </Col>
+        </Form.Row>
+        )
+      }
+    }
+
+    const renderCharForm = () => {
+      if(global){
+        return(
+        <Form.Row id='formRow'>
+        <Col xs={12} sm={6} className="formCol">
+          <Select 
+            className="selectBox"
+            menuPortalTarget={document.body} 
+            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 })}} 
+            options={this.state.selectCharacters} 
+            onChange={this.myCharChange.bind(this)} 
+            placeholder = "Your Characters"
+            isMulti
+          />
+        </Col>
+        <Col xs={12} sm={6} className="formCol">
+          <Select 
+            menuPortalTarget={document.body} 
+            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 })}} 
+            options={this.state.oppSelectCharacters} 
+            onChange={this.myOppChange.bind(this)} 
+            placeholder = "Opponents Characters"
+            isMulti 
+          />
+        </Col>
+      </Form.Row>
+        )
+      }else{
+        return (
+        <Form.Row id='formRow'>
+        <Col xs={12} sm={6} className="formCol">
+          <Select 
+            className="selectBox"
+            menuPortalTarget={document.body} 
+            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 })}} 
+            options={this.state.selectCharacters} 
+            onChange={this.myCharChange.bind(this)} 
+            placeholder = "Your Characters"
+            isMulti 
+          />
+        </Col>
+        <Col xs={12} sm={6} className="formCol">
+          <Select 
+            menuPortalTarget={document.body} 
+            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 })}} 
+            options={this.state.selectCharacters} 
+            onChange={this.myOppChange.bind(this)} 
+            placeholder = "Opponents Characters"
+            isMulti 
+          />
+        </Col>
+      </Form.Row>
+        )
+      }
+        
+    }
 
     return (
       <div className="container mt-3">
@@ -1869,37 +2032,9 @@ export default class MatchStats extends Component {
             <Card.Body>
             <h2 id="searchParams">Search</h2>
             <Form>
-              <Form.Row>
-                <Col sm={12} md={6} className="formCol">
-                  <input                  
-                    type="text"
-                    className="form-control"
-                    placeholder="Your Connect Code Ex: GEFF#353"
-                    // value={"GEFF#353"}
-                    ref={this.searchCodeVal}
-                    onKeyPress={event => {
-                      if (event.key === "Enter") {
-                        this.searchCode();
-                      }
-                    }}
-                  />
-                </Col>
-                <Col sm={12} md={6} className="formCol">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Opponents Connect Code"
-                    // value={oppCode}
-                    ref={this.oppCodeVal}
-                    onKeyPress={event => {
-                      if (event.key === "Enter") {
-                        this.searchCode();
-                      }
-                    }}
-                  />
-                </Col>
-              </Form.Row>
-              <Form.Row id='formRow'>
+              {renderCodeForm()}
+              {renderCharForm()}
+              {/* <Form.Row id='formRow'>
                 <Col xs={12} sm={6} className="formCol">
                   <Select 
                     className="selectBox"
@@ -1921,7 +2056,7 @@ export default class MatchStats extends Component {
                     isMulti 
                   />
                 </Col>
-              </Form.Row>
+              </Form.Row> */}
               <Form.Row id='formRow'>
                 <Col xs={12} sm={6} className="formCol">
                   <Select 
@@ -1963,10 +2098,30 @@ export default class MatchStats extends Component {
                 </Col>
               </Form.Row>
               <Form.Row>
+              <Col className="formCol">
+                  <div className="col text-center">
+                    <label>
+                    <BootstrapSwitchButton
+                        checked={this.state.global}
+                        onlabel=' '
+                        offlabel=' '
+                        size="xs"
+                        onstyle="success"    
+                        offstyle="secondary"                    
+                        onChange= {
+                          this.handleGlobalChange
+                      }
+                    />
+                       &nbsp; Global Search
+                    </label>
+                  </div>
+                </Col>
+              </Form.Row>
+              <Form.Row>
                 <Col className="formCol">
                   <div className="col text-center">
                     <button
-                      className="btn btn-outline-secondary"
+                      className="btn btn-outline-secondary reg-btn"
                       type="button"
                       onClick={this.searchCode}
                     >

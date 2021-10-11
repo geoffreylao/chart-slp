@@ -20,7 +20,7 @@ export default class AddMatch extends Component {
   componentDidMount(){
     MatchDataService.getAll().then(response => {
       this.setState({
-        gamesTotal: response.data[0]
+        gamesTotal: response.data
       })
       console.log(response.data)
     })
@@ -102,8 +102,8 @@ export default class AddMatch extends Component {
                 <h3>{this.state.gamesTotal.matchId ? this.state.gamesTotal.matchId : '------'} Matches Uploaded!</h3>
                 <h3>{this.state.playersTotal ? this.state.playersTotal : '-----'} Unique Players!</h3>
                 {/* <p className="title-text">Powered by Chart.js + Slippi-js</p> */}
-                <a href="/charts" className="btn btn-outline-light " role="button">GENERATE CHARTS</a>
-                <a href='https://github.com/geoffreylao/chart-slp' target="_blank" rel="noreferrer" className="btn btn-light " role="button">SOURCE CODE</a>
+                <a href="/charts" className="btn btn-outline-light reg-btn" role="button">GENERATE CHARTS</a>
+                <a href='https://github.com/geoffreylao/chart-slp' target="_blank" rel="noreferrer" className="btn btn-light reg-btn" role="button">SOURCE CODE</a>
               </div>
             </div>
             </div>
@@ -125,7 +125,7 @@ export default class AddMatch extends Component {
                       {renderFiles()}
                       </div>
                       <div className="form-group">
-                          <button className="btn btn-secondary" type="submit">UPLOAD</button>
+                          <button className="btn btn-secondary reg-btn" type="submit">UPLOAD</button>
                       </div>
                     </form>
                   </div>
@@ -134,7 +134,7 @@ export default class AddMatch extends Component {
                       <p className="uploaderText">Upload is currently limited to only 1 file at a time due to server limitations! If you'd like to upload in bulk please download the Uploader
                         Companion App.
                       </p>
-                      <a href="https://github.com/geoffreylao/chart-slp-uploader-companion-app/releases/tag/v0.0.1" target="_blank" rel="noreferrer" className="btn btn-light " role="button">UPLOADER APP</a>
+                      <a href="https://github.com/geoffreylao/chart-slp-uploader-companion-app/releases/tag/v0.0.1" target="_blank" rel="noreferrer" className="btn btn-light reg-btn" role="button">UPLOADER APP</a>
                     </div>
                   </div>
                 </div>
