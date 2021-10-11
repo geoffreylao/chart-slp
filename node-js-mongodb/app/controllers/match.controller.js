@@ -987,7 +987,7 @@ exports.findAll = (req, res) => {
           $gte: startdate,
           $lte: enddate
         }
-      }).lean().map(function(u) {return u}).skip(skip).limit(limit).sort('matchid')
+      }).lean().skip(skip).limit(limit).sort('matchid')
       .cursor();
 
       // console.log('do count: ' + count)
