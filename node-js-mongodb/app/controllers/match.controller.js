@@ -973,7 +973,7 @@ exports.findAll = (req, res) => {
   co(function*() {
     var docCount = 0;
     var count = 0;
-    var limit = 1050;
+    var limit = 5000;
     var skip = 0;
 
     do {        
