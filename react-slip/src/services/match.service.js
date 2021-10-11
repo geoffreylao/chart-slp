@@ -9,6 +9,10 @@ class MatchDataService{
     return http.get("/matches/players");
   }
 
+  getAllMatches(){
+    return http.get("/matches/dump")
+  }
+
   create(data) {
     return http.post("/matches", data);
   }

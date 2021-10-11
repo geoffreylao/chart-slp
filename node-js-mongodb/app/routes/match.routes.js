@@ -15,6 +15,9 @@ module.exports = app => {
   // Retrieve all Players
   router.get("/players", matches.getPlayers)
 
+  // Retrieve all matches json
+  router.get("/dump", matches.getAllMatches)
+
   // Get matches from uploader app
   router.post("/external", matches.uploadSingle)
 

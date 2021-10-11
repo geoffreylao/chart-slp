@@ -10,8 +10,8 @@ app.use(busboy({
 }))
 
 var corsOptions = {
-  origin: "http://chartslp.netlify.app/"
-  //origin: "http://localhost:3000"
+  //origin: "http://chartslp.netlify.app/"
+  origin: "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));
@@ -26,7 +26,7 @@ const extendTimeoutMiddleware = (req, res, next) => {
   let isDataSent = false;
 
   // Only extend the timeout for API requests
-  if (req.url.includes('/api/matches/players') || req.url.includes('/api/matches/all') || req.url.includes('/api/matches/external') || !req.url.includes('/api/matches') && req.method !== 'GET') {
+  if (req.url.includes('/api/matches/dump') || req.url.includes('/api/matches/all') || req.url.includes('/api/matches/external') || !req.url.includes('/api/matches') && req.method !== 'GET') {
     next();
     return;
   }else{

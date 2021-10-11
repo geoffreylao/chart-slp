@@ -21,6 +21,18 @@ var inserted = 0;
 
 var co = require('co');
 
+var chararr = [
+  "CAPTAIN_FALCON","DONKEY_KONG","FOX" ,"GAME_AND_WATCH","KIRBY",
+  "BOWSER","LINK","LUIGI","MARIO","MARTH","MEWTWO","NESS","PEACH",
+  "PIKACHU","ICE_CLIMBERS","JIGGLYPUFF","SAMUS","YOSHI","ZELDA",
+  "SHEIK","FALCO","YOUNG_LINK","DR_MARIO","ROY","PICHU","GANONDORF"
+]
+
+var stagearr = [
+  "FOUNTAIN_OF_DREAMS","POKEMON_STADIUM","YOSHIS_STORY","DREAMLAND",
+  "BATTLEFIELD","FINAL_DESTINATION"
+]
+
 function parse_slp(filename){
   try {
     var game = new SlippiGame(filename);
@@ -929,18 +941,6 @@ exports.findAll = (req, res) => {
   let myoppcode = oppcode ? oppcode.replace("-", "#") : "" ;
   myoppcode ? playerArr.push(myoppcode) : {} ;
 
-  let chararr = [
-    "CAPTAIN_FALCON","DONKEY_KONG","FOX" ,"GAME_AND_WATCH","KIRBY",
-    "BOWSER","LINK","LUIGI","MARIO","MARTH","MEWTWO","NESS","PEACH",
-    "PIKACHU","ICE_CLIMBERS","JIGGLYPUFF","SAMUS","YOSHI","ZELDA",
-    "SHEIK","FALCO","YOUNG_LINK","DR_MARIO","ROY","PICHU","GANONDORF"
-  ]
-
-  let stagearr = [
-    "FOUNTAIN_OF_DREAMS","POKEMON_STADIUM","YOSHIS_STORY","DREAMLAND",
-    "BATTLEFIELD","FINAL_DESTINATION"
-  ]
-
   let completearr = [true,false];
 
   let characters = [];
@@ -1333,6 +1333,53 @@ exports.getPlayers = (req, res) => {
     res.send(data.length.toString())
   })
 }
+
+exports.getAllMatches = (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+
+
+  co(function*() {
+    var docCount = 0;
+    var count = 0;
+    var limit = 5000;
+    var skip = 0;
+
+    do {        
+      const cursor = Match.find({
+        'players' : {$elemMatch : { characterString: {$in : chararr}}} ,        
+        'settings.stageString' : {$in: stagearr}
+      }).lean().skip(skip).limit(limit)
+      .cursor();
+
+      // console.log('do count: ' + count)
+      // console.log('skip: ' + skip)
+      docCount = 0;
+      
+      for (let doc = yield cursor.next(); doc != null; doc = yield cursor.next()) {
+        console.log(++docCount)
+      }
+      
+      //console.log(docCount)
+
+      if(count === 0 && docCount === 0){
+        console.log('no matches')
+
+        res.send('fail')
+
+        return
+      }
+
+      count++;
+      skip = count * limit
+    } while(docCount !== 0)
+    res.end("complete")
+  });
+
+}
+
+
+  
+
 
 exports.uploadSingle = (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
