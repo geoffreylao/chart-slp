@@ -8,6 +8,11 @@ body {
   width: 100%;
 }
 
+body,
+html {
+  overflow-x: hidden;
+}
+
 /* Responsive Charts */
 .chartDiv {
   height: 100%;
