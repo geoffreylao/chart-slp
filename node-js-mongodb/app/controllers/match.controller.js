@@ -618,7 +618,7 @@ exports.findAll = (req, res) => {
             if(res.players[j].killCount === 4 && res.players[j].deathCount === 0){
               myFourStocks++;
             }
-            }else{
+          }else{
               myVsCharWins[res.players[j].characterId]++;
             }      
           }
@@ -1382,7 +1382,7 @@ exports.findAll = (req, res) => {
      
      
        do{
-         const cursor = Match.distinct([
+         const cursor = Match.aggregate([
            {
              '$match': {
                'players.characterString': {$in: characters}
@@ -1415,7 +1415,7 @@ exports.findAll = (req, res) => {
                }
              }
            }
-         ])
+         ]).toArray()
          .cursor();
          
          docCount = 0;
