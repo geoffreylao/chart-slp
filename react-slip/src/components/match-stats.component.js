@@ -954,12 +954,6 @@ var characters = chararr.map((x,i) => ({
   "label": <div><img src={`stock_icons/${charpng[i]}`} height="30px" width="30px" alt=""/> {charpng[i].split('.').slice(0, -1).join('.')}</div>
 }))
 
-function deleteByVal(obj, val) {
-  for (var key in obj) {
-      if (obj[key].value === val) delete obj[key];
-  }
-}
-
 export default class MatchStats extends Component {
   constructor(props) {
     super(props);
