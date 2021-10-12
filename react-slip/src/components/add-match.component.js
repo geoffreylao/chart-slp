@@ -101,6 +101,7 @@ export default class AddMatch extends Component {
               <div className="col-lg-6 titleCol titleTextCol">
                 <h1 className="title-text">Chart.slp | Slippi Charts</h1>
                 <p className="title-text">This website is designed to provide simple and interactive charts for analyzing your Slippi Online games.</p>
+                <p className="title-text">Now mobile friendly!</p>
                 <h3>{this.state.gamesTotal ? this.state.gamesTotal : '------'} Matches Uploaded!</h3>
                 <h3>{this.state.playersTotal ? this.state.playersTotal : '-----'} Unique Players!</h3>
                 {/* <p className="title-text">Powered by Chart.js + Slippi-js</p> */}
