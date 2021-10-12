@@ -970,7 +970,7 @@ exports.findAll = (req, res) => {
   co(function*() {
     var docCount = 0;
     var count = 0;
-    var limit = 1050;
+    var limit = 5000;
     var skip = 0;
 
     do {        
@@ -984,7 +984,7 @@ exports.findAll = (req, res) => {
           $gte: startdate,
           $lte: enddate
         }
-      }).lean().map(function(u) {return u}).skip(skip).limit(limit).sort('matchid')
+      }).lean().skip(skip).limit(limit)
       .cursor();
 
       // console.log('do count: ' + count)
@@ -1316,14 +1316,8 @@ exports.findAll = (req, res) => {
 
 exports.getTotal = (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
-  Match.aggregate([
-    [
-      {
-        '$count': 'matchId'
-      }
-    ]
-  ]).then(data => {
-    res.send(data)
+  Match.estimatedDocumentCount().then(data => {
+    res.send(data.toString())
   })
 }
 

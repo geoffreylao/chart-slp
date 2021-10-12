@@ -18,16 +18,18 @@ export default class AddMatch extends Component {
 }
 
   componentDidMount(){
-    MatchDataService.getAll().then(response => {
-      this.setState({
-        gamesTotal: response.data[0]
-      })
-      console.log(response.data)
-    })
+
 
     MatchDataService.getPlayers().then(response => {
       this.setState({
         playersTotal: response.data
+      })
+      console.log(response.data)
+    })
+
+    MatchDataService.getAll().then(response => {
+      this.setState({
+        gamesTotal: response.data
       })
       console.log(response.data)
     })
@@ -99,22 +101,23 @@ export default class AddMatch extends Component {
               <div className="col-lg-6 titleCol titleTextCol">
                 <h1 className="title-text">Chart.slp | Slippi Charts</h1>
                 <p className="title-text">This website is designed to provide simple and interactive charts for analyzing your Slippi Online games.</p>
-                <h3>{this.state.gamesTotal.matchId ? this.state.gamesTotal.matchId : '------'} Matches Uploaded!</h3>
+                <h3>{this.state.gamesTotal ? this.state.gamesTotal : '------'} Matches Uploaded!</h3>
                 <h3>{this.state.playersTotal ? this.state.playersTotal : '-----'} Unique Players!</h3>
                 {/* <p className="title-text">Powered by Chart.js + Slippi-js</p> */}
-                <a href="/charts" className="btn btn-outline-light " role="button">GENERATE CHARTS</a>
-                <a href='https://github.com/geoffreylao/chart-slp' target="_blank" rel="noreferrer" className="btn btn-light " role="button">SOURCE CODE</a>
+                <a href="/charts" className="btn btn-light " role="button">GENERATE CHARTS</a>
+                <a href='https://github.com/geoffreylao/chart-slp' target="_blank" rel="noreferrer" className="btn btn-outline-light " role="button">SOURCE CODE</a>
               </div>
             </div>
             </div>
           </section>
           <section id="upload">
+          <div className="container mx-6">
             <div className='row'>
-              <div className="container mx-6">
+              
                 <div className='col-lg-12'>
                   <h1 className="upload-h1">Upload Games</h1>                  
                 </div>
-                <div className="row">
+                <div className="row uploader-row">
                   <div className='col-lg-5 uploadCol singleUploader'>
                     <h3>Upload Single</h3>
                     <form onSubmit={this.onSubmit} encType="multipart/form-data">
@@ -181,8 +184,9 @@ export default class AddMatch extends Component {
           </section>
 
           <section id="footerSection">
+          <div className="container mx-6">
            <div className='row'>
-              <div className="container mx-6">
+             
                 <div className='col-lg-12 colFooter'>                  
                   <div className="footer">
                       <p className="footer-logo">

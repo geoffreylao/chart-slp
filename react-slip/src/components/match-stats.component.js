@@ -1845,8 +1845,14 @@ export default class MatchStats extends Component {
       else if (statsLoaded === "loading")
       {
         return(
+          <div>
           <div id="outer">
             <div id="inner"><ReactSpinner type="border" color="secondary" size="5" /></div>
+          </div>
+            <div className="noMatches">
+            <p>Taking a long time to load your stats? Try further filtering your data such as only entering your main in Your Characters</p>
+          </div>
+          <hr></hr>
           </div>
         )
       }
