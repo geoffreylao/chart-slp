@@ -566,7 +566,6 @@ exports.findAll = (req, res) => {
   let frames = 0;
 
   function accumulateStats(connect_code, res){
-    if(!res.settings.isTeams){
       myTotalMatches++;
   
       frames += res.metadata.lastFrame;
@@ -908,10 +907,8 @@ exports.findAll = (req, res) => {
           myOppActionCountArr[res.players[j].characterId][6] +=  res.players[j].actionCounts.rollCount;
         }
       }
-    }
-    else{
-  
-    }
+    
+
   
   }
   
