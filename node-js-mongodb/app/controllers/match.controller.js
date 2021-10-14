@@ -1334,9 +1334,63 @@ exports.getPlayers = (req, res) => {
   })
 }
 
+function add(accumulator, a) {
+  return accumulator + a;
+}
+
 exports.getAllMatches = (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
+  console.log('entering global stats route')
 
+  // character, usage, [winsVsChar[stages]], [lossVsChar[stages]]
+  let characterUsage = Array(26).fill(0)
+
+  let charStageWins = Array.from({length: 26}, // char
+    e => Array.from({length: 26}, // vs what char
+    e => Array(33).fill(0)) // what stage
+  )
+
+  let charStageLoss = Array.from({length: 26}, // char
+    e => Array.from({length: 26}, // vs what char
+    e => Array(33).fill(0)) // what stage
+  )
+
+  let charColor = Array.from({length: 26}, // char
+    e => Array(6).fill(0)) // what stage
+
+  let charQuitout = Array(26).fill(0) // vs what char
+
+  function accumulateGlobalStats(res){
+
+    for (let i = 0; i < res.players.length; i++) {
+
+      let oppIndex = i === 0 ? 1 : 0 
+
+      if(res.players[0].characterId <= 25 && res.players[1].characterId <= 25){
+        characterUsage[res.players[i].characterId]++;
+        charColor[res.players[i].characterId][res.players[i].characterColor]++;
+
+        if(res.metadata.winner === res.players[i].code){
+          try {
+            charStageWins[res.players[i].characterId][res.players[oppIndex].characterId][res.settings.stageId]++;      
+          } catch (error) {
+          }
+        }else if(res.metadata.winner !== res.players[i].code && res.metadata.winner !== 'INCOMPLETE' && res.metadata.winner !== 'DRAW'){
+          try {
+            charStageLoss[res.players[i].characterId][res.players[oppIndex].characterId][res.settings.stageId]++;         
+          } catch (error) {
+          }
+        }
+  
+        if(res.metadata.winner === 'INCOMPLETE'){
+          charQuitout[res.players[i].characterId]++;
+        }
+      }
+
+    }
+  }
+
+  console.log('starting global')
 
   co(function*() {
     var docCount = 0;
@@ -1356,7 +1410,8 @@ exports.getAllMatches = (req, res) => {
       docCount = 0;
       
       for (let doc = yield cursor.next(); doc != null; doc = yield cursor.next()) {
-        console.log(++docCount)
+        docCount++;
+        accumulateGlobalStats(doc);
       }
       
       //console.log(docCount)
@@ -1372,9 +1427,42 @@ exports.getAllMatches = (req, res) => {
       count++;
       skip = count * limit
     } while(docCount !== 0)
-    res.end("complete")
-  });
 
+   //res.end("complete")
+
+    console.log('on end global')
+
+    let charWins = Array(26).fill(0);
+    let charLoss = Array(26).fill(0);
+    let charWinrate = Array(26).fill(0);
+  
+    for (let i = 0; i < 26; i++) {
+      charWins[i] += charStageWins[i].flat().reduce(add,0)
+        
+      charLoss[i] += charStageLoss[i].flat().reduce(add,0)      
+    }
+  
+    for (let i = 0; i < charWinrate.length; i++) {
+      charWinrate[i] = Math.round((charWins[i]/(charWins[i] + charLoss[i])) * 100) 
+    }
+  
+    console.log('creating global res obj')
+  
+    let globalStats = {
+      globalCharUsage : characterUsage,
+      globalCharQuitout : charQuitout,
+      globalCharWins : charWins,
+      globalCharLoss : charLoss,
+      globalWinrate : charWinrate,
+      globalCharColor : charColor,
+      gloabalCharStageWins : charStageWins,
+      globalCharStageLoss : charStageLoss
+    }
+  
+    console.log('global stats gotten')
+    res.end(JSON.stringify(globalStats))
+    //res.send(globalStats)
+  });
 }
 
 
