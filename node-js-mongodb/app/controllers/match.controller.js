@@ -175,7 +175,6 @@ function parse_slp(filename){
         }
     }
 
-
     var myobj = {
       matchid: metadata.startAt + metadata.players[0].names.code + metadata.players[1].names.code,
       settings: {

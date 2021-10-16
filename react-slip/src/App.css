@@ -6,6 +6,7 @@ img-fluid {
 
 body {
   width: 100%;
+  height: 100vh;
 }
 
 body,
@@ -104,9 +105,48 @@ html {
   border-style: solid;
   border-color: #000097;
   position: absolute;
-  top: 0;
-  left: 0;
   scale: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#imgContainer3 img {
+  border-style: solid;
+  border-color: #bb8800;
+  position: absolute;
+  scale: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#imgContainer4 img {
+  border-style: solid;
+  border-color: #005400;
+  position: absolute;
+  scale: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#imgContainer5 img {
+  border-style: solid;
+  border-color: #ab2d1f;
+  position: absolute;
+  scale: 100%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#imgContainer6 img {
+  border-style: solid;
+  border-color: #2393a7;
+  position: absolute;
+  scale: 100%;
+  display: block;
   margin-left: auto;
   margin-right: auto;
 }
@@ -339,4 +379,36 @@ h1 {
 
 hr {
   margin-top: 0;
+}
+
+/* Nav */
+a.nav-link {
+  padding-right: 0.65rem !important;
+}
+
+/* Global */
+.globalstats {
+  height: 650px;
+  margin-bottom: 50px;
+}
+
+.seperator {
+  height: 100%;
+}
+
+.globalSelectBox {
+  width: 50%;
+  display: inline-block;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+.globalSelectBoxDiv {
+  text-align: center;
+  margin: auto;
+  position: relative;
+}
+
+.globalHeader {
+  text-align: center;
 }
