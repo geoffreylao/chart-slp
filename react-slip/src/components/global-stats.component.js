@@ -798,25 +798,7 @@ export default class MatchStats extends Component {
         parseInt(getKeyByValue(char_dict, this.state.P1char.value)),
         parseInt(getKeyByValue(char_dict, this.state.P2char.value))
       )
-    });
-
-    console.log(this.state.P1vsGlobal)
-
-    MatchDataService.getPlayers().then(response => {
-      this.setState({
-        playersTotal: response.data
-      })
-
-      console.log(response.data)
-    })
-
-    MatchDataService.getAll().then(response => {
-      this.setState({
-        gamesTotal: response.data
-      })
-      console.log(response.data)
-    })
- 
+    }); 
   }
 
   componentWillMount(){
