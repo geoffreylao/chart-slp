@@ -261,7 +261,7 @@ a:hover {
 
 /* Home Page */
 .homepage-text {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 }
 
 #title {
@@ -301,7 +301,7 @@ h1 {
 .btn {
   width: 150px;
   margin: 10px;
-  font-family: 'Maven Pro';
+  font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
   font-size: 0.85rem;
 }
 
