@@ -177,9 +177,9 @@ export default class AddMatch extends Component {
 
                 <h1 className="how-to-h1">Credits</h1>
                 <p className="how-to-text">
-                  <a href='https://twitter.com/Fizzi36' target="_blank" rel="noreferrer">Fizzi</a> and the <a href='https://slippi.gg/about' target="_blank" rel="noreferrer">Team for Project Slippi</a>
-                  <a href='https://github.com/geoffreylao/chart-slp' target="_blank" rel="noreferrer" className="btn btn-outline-light " role="button">SOURCE CODE</a>
+                  <a href='https://twitter.com/Fizzi36' target="_blank" rel="noreferrer">Fizzi</a> and the <a href='https://slippi.gg/about' target="_blank" rel="noreferrer">Team for Project Slippi</a>                  
                 </p>
+                <a href='https://github.com/geoffreylao/chart-slp' target="_blank" rel="noreferrer" className="btn btn-outline-light " role="button">SOURCE CODE</a>
               </div>
             </div>
           </div>
