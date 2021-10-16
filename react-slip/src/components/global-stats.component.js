@@ -829,7 +829,7 @@ export default class MatchStats extends Component {
 
         <div className="row">
           <div className="col-lg-12">
-            <h3 id="searchParams">Global Snapshot made on 2021-10-24 at 366829 Games and 40598 Players</h3>
+            <h3 id="searchParams">Global Snapshot made on 2021-10-14 at 366829 Games and 40598 Players</h3>
           </div>  
         </div>
 
