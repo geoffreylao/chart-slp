@@ -1,5 +1,4 @@
 import { Component } from "react"; 
-import MatchDataService from "../services/match.service";
 import Select from 'react-select'
 
 import PieChart from './charts/pie-chart.component';
