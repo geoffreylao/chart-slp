@@ -1372,13 +1372,11 @@ exports.getAllMatches = (req, res) => {
 
         if(res.metadata.winner === res.players[i].code){
           try {
-            charStageWins[res.players[i].characterId][res.players[oppIndex].characterId][res.settings.stageId]++;      
+            charStageWins[res.players[i].characterId][res.players[oppIndex].characterId][res.settings.stageId]++;   
+            charStageLoss[res.players[oppIndex].characterId][res.players[i].characterId][res.settings.stageId]++;   
           } catch (error) {
-          }
-        }else if(res.metadata.winner !== res.players[i].code && res.metadata.winner !== 'INCOMPLETE' && res.metadata.winner !== 'DRAW'){
-          try {
-            charStageLoss[res.players[i].characterId][res.players[oppIndex].characterId][res.settings.stageId]++;         
-          } catch (error) {
+            console.log(res.matchid)
+            //console.log(error)
           }
         }
   
@@ -1443,7 +1441,7 @@ exports.getAllMatches = (req, res) => {
     }
   
     for (let i = 0; i < charWinrate.length; i++) {
-      charWinrate[i] = Math.round((charWins[i]/(charWins[i] + charLoss[i])) * 100) 
+      charWinrate[i] = ((charWins[i]/(charWins[i] + charLoss[i]))) 
     }
   
     console.log('creating global res obj')
