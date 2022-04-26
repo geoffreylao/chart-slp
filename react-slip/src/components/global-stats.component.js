@@ -853,6 +853,12 @@ export default class MatchStats extends Component {
                 <hr></hr>   
             </div>
           </div>   
+          <div className="row">
+            <div className="col-lg-12">
+          <h3 id="searchParams">Global Matchup Chart</h3>
+          </div>       
+            <img src="muchart.png" alt="" style={{'width': '65%', 'display': 'block', 'margin-left': 'auto', 'margin-right': 'auto'}}/>        
+          </div> 
         </div>
 
         <div className="row">        
@@ -867,7 +873,8 @@ export default class MatchStats extends Component {
                   )}
             </div>
             <hr></hr>
-          </div>        
+          </div> 
+     
         </div>
 
         <div className="row">        
