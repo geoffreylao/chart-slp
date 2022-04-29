@@ -1380,7 +1380,7 @@ exports.getAllMatches = (req, res) => {
           }
         }
   
-        if(res.metadata.winner === 'INCOMPLETE'){
+        if(res.metadata.winner === 'INCOMPLETE' && res.metadata.lastFrame <= 3600){
           charQuitout[res.players[i].characterId]++;
         }
       }
