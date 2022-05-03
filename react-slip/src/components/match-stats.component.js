@@ -386,7 +386,7 @@ function createBarChartCharacterWinrate(myDict, charUsage, charWins, charLoss, t
       if(wins === 0){
         charData.push(0) 
       }else{
-        charData.push(parseInt (wins/(wins+loss)* 100) ) 
+        charData.push(Math.round (wins/(wins+loss)* 100) ) 
       }
 
       charImage.push(myDict[items[j][0]]);
@@ -447,7 +447,7 @@ function createBarChartStageWinrate(myDict, stageWins, stageLoss, title){
       if(wins === 0){
         stageData.push(0) 
       }else{
-        stageData.push(parseInt (wins/(wins+loss)* 100) ) 
+        stageData.push(Math.round (wins/(wins+loss)* 100) ) 
       }
 
       stageImage.push(myDict[items[j][0]]);
@@ -1167,7 +1167,7 @@ export default class MatchStats extends Component {
                     labels={[myStats.totalLosses + ' Loss', myStats.totalWins + ' Wins']}
                     data={[myStats.totalLosses, myStats.totalWins]}
                     title='Winrate'
-                    percentage = {parseInt((myStats.totalWins/(myStats.totalLosses + myStats.totalWins)) * 100)}
+                    percentage = {Math.round((myStats.totalWins/(myStats.totalLosses + myStats.totalWins)) * 100)}
                     player={myStats.code}
                     opponent={textOppCode}
                   />
@@ -1256,7 +1256,7 @@ export default class MatchStats extends Component {
                     labels={[myStats.oppNeutralWins, myStats.neutralWins ]}
                     data={[myStats.oppNeutralWins, myStats.neutralWins ]}
                     title='Neutral Wins'
-                    percentage = {parseInt((myStats.neutralWins/(myStats.oppNeutralWins + myStats.neutralWins)) * 100)}
+                    percentage = {Math.round((myStats.neutralWins/(myStats.oppNeutralWins + myStats.neutralWins)) * 100)}
                     player={myStats.code}
                     opponent={textOppCode}
                     options={{
@@ -1270,7 +1270,7 @@ export default class MatchStats extends Component {
                     labels={[myStats.oppCounterHits, myStats.counterHits, ]}
                     data={[myStats.oppCounterHits, myStats.counterHits]}
                     title='Counter Hits'
-                    percentage = {parseInt((myStats.counterHits/(myStats.oppCounterHits + myStats.counterHits)) * 100)}
+                    percentage = {Math.round((myStats.counterHits/(myStats.oppCounterHits + myStats.counterHits)) * 100)}
                     player={myStats.code}
                     opponent={textOppCode}
                     options={{
@@ -1284,7 +1284,7 @@ export default class MatchStats extends Component {
                     labels={[myStats.oppBeneficialTrades , myStats.beneficialTrades ]}
                     data={[ myStats.oppBeneficialTrades, myStats.beneficialTrades]}
                     title='Beneficial Trades'
-                    percentage = {parseInt((myStats.beneficialTrades/(myStats.oppBeneficialTrades + myStats.beneficialTrades)) * 100)}
+                    percentage = {Math.round((myStats.beneficialTrades/(myStats.oppBeneficialTrades + myStats.beneficialTrades)) * 100)}
                     player={myStats.code}
                     opponent={textOppCode}
                     options={{
@@ -1298,7 +1298,7 @@ export default class MatchStats extends Component {
                     labels={[myStats.oppFirstBloods, myStats.firstBloods]}
                     data={[myStats.oppFirstBloods , myStats.firstBloods]}
                     title='First Bloods'
-                    percentage = {parseInt((myStats.firstBloods/(myStats.oppFirstBloods + myStats.firstBloods)) * 100)}
+                    percentage = {Math.round((myStats.firstBloods/(myStats.oppFirstBloods + myStats.firstBloods)) * 100)}
                     player={myStats.code}
                     opponent={textOppCode}
                     options={{
@@ -1581,7 +1581,7 @@ export default class MatchStats extends Component {
                   labels={[myStats.vsRivalLoss + ' Loss', myStats.vsRivalWin + ' Wins']}
                   data={[myStats.vsRivalLoss, myStats.vsRivalWin]}
                   title='Winrate'
-                  percentage = {parseInt((myStats.vsRivalWin/(myStats.vsRivalLoss + myStats.vsRivalWin)) * 100)}
+                  percentage = {Math.round((myStats.vsRivalWin/(myStats.vsRivalLoss + myStats.vsRivalWin)) * 100)}
                   player={myStats.rival}
                 />
                 </div>

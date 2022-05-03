@@ -350,7 +350,7 @@ function createBarChartCharacterWinrate(myDict, charUsage, charWins, charLoss, t
       if(wins === 0){
         charData.push(0) 
       }else{
-        charData.push(parseInt (wins/(wins+loss)* 100) ) 
+        charData.push(Math.round (wins/(wins+loss)* 100) ) 
       }
 
       charImage.push(myDict[items[j][0]]);
@@ -427,7 +427,7 @@ function getQuitOutPercent(quitout, usage){
   let quitoutPercent = Array(26).fill(0)
 
   for (let i = 0; i < 26; i++) {
-    quitoutPercent[i] = parseInt((quitout[i] / usage[i]) * 100)
+    quitoutPercent[i] = Math.round((quitout[i] / usage[i]) * 100)
   }
 
   return quitoutPercent;
@@ -473,7 +473,7 @@ function createBarChartStageWinrate(myDict, stageWins, stageLoss, title){
       if(wins === 0){
         stageData.push(0) 
       }else{
-        stageData.push(parseInt (wins/(wins+loss)* 100) ) 
+        stageData.push(Math.round (wins/(wins+loss)* 100) ) 
       }
 
       stageImage.push(myDict[items[j][0]]);
@@ -748,8 +748,8 @@ export default class MatchStats extends Component {
       P1vsP2 : parseVsCharWinrate(
         this.state.globalStats.gloabalCharStageWins,
         this.state.globalStats.globalCharStageLoss,
-        parseInt(getKeyByValue(char_dict, e.value)),
-        parseInt(getKeyByValue(char_dict, this.state.P2char.value))
+        Math.round(getKeyByValue(char_dict, e.value)),
+        Math.round(getKeyByValue(char_dict, this.state.P2char.value))
       )
     })
 
@@ -757,7 +757,7 @@ export default class MatchStats extends Component {
       P1vsGlobal : parseGlobalCharWinrate(
         this.state.globalStats.gloabalCharStageWins,
         this.state.globalStats.globalCharStageLoss,
-        parseInt(getKeyByValue(char_dict, e.value))
+        Math.round(getKeyByValue(char_dict, e.value))
       )
     })
 
@@ -770,8 +770,8 @@ export default class MatchStats extends Component {
       P1vsP2 : parseVsCharWinrate(
         this.state.globalStats.gloabalCharStageWins,
         this.state.globalStats.globalCharStageLoss,
-        parseInt(getKeyByValue(char_dict, this.state.P1char.value)),
-        parseInt(getKeyByValue(char_dict, e.value))
+        Math.round(getKeyByValue(char_dict, this.state.P1char.value)),
+        Math.round(getKeyByValue(char_dict, e.value))
       )
     })
   }
@@ -794,8 +794,8 @@ export default class MatchStats extends Component {
       P1vsP2 : parseVsCharWinrate(
         this.state.globalStats.gloabalCharStageWins,
         this.state.globalStats.globalCharStageLoss,
-        parseInt(getKeyByValue(char_dict, this.state.P1char.value)),
-        parseInt(getKeyByValue(char_dict, this.state.P2char.value))
+        Math.round(getKeyByValue(char_dict, this.state.P1char.value)),
+        Math.round(getKeyByValue(char_dict, this.state.P2char.value))
       )
     }); 
   }
@@ -805,7 +805,7 @@ export default class MatchStats extends Component {
       P1vsGlobal : parseGlobalCharWinrate(
         this.state.globalStats.gloabalCharStageWins,
         this.state.globalStats.globalCharStageLoss,
-        parseInt(getKeyByValue(char_dict, this.state.P1char.value))
+        Math.round(getKeyByValue(char_dict, this.state.P1char.value))
       )    
     })
   }
@@ -908,7 +908,7 @@ export default class MatchStats extends Component {
           <div className="col-lg-12 globalstats">
             <div className="chartDiv">
             {createCharColorBarChart(
-              parseInt(getKeyByValue(char_dict, this.state.P1char.value)), 
+              Math.round(getKeyByValue(char_dict, this.state.P1char.value)), 
               globalStats.globalCharColor,
               `${this.state.P1char.label.props.children[0].props.src.replace(".png", "").replace("stock_icons/", "")} Colors`, 
               )}
@@ -939,11 +939,11 @@ export default class MatchStats extends Component {
                     stageDict, 
                     parseCharStageWinLoss(
                       globalStats.gloabalCharStageWins,
-                      parseInt(getKeyByValue(char_dict, this.state.P1char.value))
+                      Math.round(getKeyByValue(char_dict, this.state.P1char.value))
                     ), 
                     parseCharStageWinLoss(
                       globalStats.globalCharStageLoss,
-                      parseInt(getKeyByValue(char_dict, this.state.P1char.value))
+                      Math.round(getKeyByValue(char_dict, this.state.P1char.value))
                     ), 
                     `${this.state.P1char.label.props.children[0].props.src.replace(".png", "").replace("stock_icons/", "")} Stage Winrate %`)}
                 </div>
@@ -983,7 +983,7 @@ export default class MatchStats extends Component {
               <div className="col-lg-4 sumCol">
                 <div id="imgContainer">
                     <img src="cssp1bg.png" width="272" height="376" alt=""/>
-                    <img src={`char_portraits/${parseInt(getKeyByValue(char_dict, this.state.P1char.value))}/0.png`} width="272" height="376" alt=""/>
+                    <img src={`char_portraits/${Math.round(getKeyByValue(char_dict, this.state.P1char.value))}/0.png`} width="272" height="376" alt=""/>
                 </div>
               </div>
               <div className="col-lg-4 sumCol">
@@ -992,7 +992,7 @@ export default class MatchStats extends Component {
                     labels={[P1vsP2.totalLosses + ' Loss', P1vsP2.totalWins + ' Wins']}
                     data={[P1vsP2.totalLosses, P1vsP2.totalWins]}
                     title='Winrate'
-                    percentage = {parseInt((P1vsP2.totalWins/(P1vsP2.totalLosses + P1vsP2.totalWins)) * 100)}
+                    percentage = {Math.round((P1vsP2.totalWins/(P1vsP2.totalLosses + P1vsP2.totalWins)) * 100)}
                     player={this.state.P1char.value}
                     opponent={this.state.P2char.value}
                   />
@@ -1001,7 +1001,7 @@ export default class MatchStats extends Component {
               <div className="col-lg-4 sumCol">
                 <div id="imgContainer2">
                     <img src="cssp2bg.png" width="272" height="376" alt=""/>
-                    <img src={`char_portraits/${parseInt(getKeyByValue(char_dict, this.state.P2char.value))}/0.png`} width="272" height="376" alt=""/>
+                    <img src={`char_portraits/${Math.round(getKeyByValue(char_dict, this.state.P2char.value))}/0.png`} width="272" height="376" alt=""/>
                 </div>
               </div>
             </div>
@@ -1013,13 +1013,13 @@ export default class MatchStats extends Component {
                         stageDict, 
                         parseP1vsP2StageWinLoss(
                           globalStats.gloabalCharStageWins,
-                          parseInt(getKeyByValue(char_dict, this.state.P1char.value)),
-                          parseInt(getKeyByValue(char_dict, this.state.P2char.value))
+                          Math.round(getKeyByValue(char_dict, this.state.P1char.value)),
+                          Math.round(getKeyByValue(char_dict, this.state.P2char.value))
                         ), 
                         parseP1vsP2StageWinLoss(
                           globalStats.globalCharStageLoss,
-                          parseInt(getKeyByValue(char_dict, this.state.P1char.value)),
-                          parseInt(getKeyByValue(char_dict, this.state.P2char.value))
+                          Math.round(getKeyByValue(char_dict, this.state.P1char.value)),
+                          Math.round(getKeyByValue(char_dict, this.state.P2char.value))
                         ), 
                         `${this.state.P1char.label.props.children[0].props.src.replace(".png", "").replace("stock_icons/", "")} vs ${this.state.P2char.label.props.children[0].props.src.replace(".png", "").replace("stock_icons/", "")} Stage Winrate %`)}
                     </div>

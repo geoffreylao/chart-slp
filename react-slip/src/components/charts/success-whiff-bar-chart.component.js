@@ -91,7 +91,7 @@ export default class SuccessWhiffBarChart extends Component {
                 var whiffdataset = data.datasets[1];
                 
                 return data.labels[tooltipItem.index] + ': ' + dataset.data[tooltipItem.index] + " ("   
-                + parseInt((dataset.data[tooltipItem.index] / (successdataset.data[tooltipItem.index]+whiffdataset.data[tooltipItem.index]))*100) + "%)"
+                + Math.round((dataset.data[tooltipItem.index] / (successdataset.data[tooltipItem.index]+whiffdataset.data[tooltipItem.index]))*100) + "%)"
               },
               title: function(tooltipItem, data) {
                 return data.datasets[tooltipItem[0].datasetIndex].label

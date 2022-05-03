@@ -226,7 +226,7 @@ function parse_slp(filename){
           counterHits: stats.overall[0].counterHitRatio.count,
           trades: stats.overall[0].beneficialTradeRatio.count,
           deathCount: p1Kills,
-          lcancelPercent: parseInt((stats.actionCounts[0].lCancelCount.success / (stats.actionCounts[0].lCancelCount.success + stats.actionCounts[0].lCancelCount.fail)) * 100),
+          lcancelPercent: Math.round((stats.actionCounts[0].lCancelCount.success / (stats.actionCounts[0].lCancelCount.success + stats.actionCounts[0].lCancelCount.fail)) * 100),
           grabCount: stats.actionCounts[0].grabCount,
           throwCount: stats.actionCounts[0].throwCount,
           groundTechCount: stats.actionCounts[0].groundTechCount,
@@ -267,7 +267,7 @@ function parse_slp(filename){
           counterHits: stats.overall[1].counterHitRatio.count,
           trades: stats.overall[1].beneficialTradeRatio.count,
           deathCount: p0Kills,
-          lcancelPercent: parseInt((stats.actionCounts[1].lCancelCount.success / (stats.actionCounts[1].lCancelCount.success + stats.actionCounts[1].lCancelCount.fail)) * 100),
+          lcancelPercent: Math.round((stats.actionCounts[1].lCancelCount.success / (stats.actionCounts[1].lCancelCount.success + stats.actionCounts[1].lCancelCount.fail)) * 100),
           grabCount: stats.actionCounts[1].grabCount,
           throwCount: stats.actionCounts[1].throwCount,
           groundTechCount: stats.actionCounts[1].groundTechCount,
@@ -1017,27 +1017,27 @@ exports.findAll = (req, res) => {
       myTotalTime = displayTime(frames);
 
       // Win Rate
-      myWinrate = parseInt((myTotalWins/(myTotalWins+myTotalLosses)) * 100);
+      myWinrate = Math.round((myTotalWins/(myTotalWins+myTotalLosses)) * 100);
 
       // Openings per KO
       myOpeningsPerKO = myOpenings/myKills ? myOpenings/myKills : 0;
       myOppOpeningsPerKO = myOppOpenings/myOppKills ? myOppOpenings/myOppKills : 0;
 
       // Conversion Rate
-      myConversionRate = parseInt((mySuccessfulConversions/myConversions) * 100) ? parseInt((mySuccessfulConversions/myConversions) * 100) : 0;
-      myOppConversionRate = parseInt((myOppSuccessfulConversions/myOppConversions) * 100) ? parseInt((myOppSuccessfulConversions/myOppConversions) * 100) : 0;
+      myConversionRate = Math.round((mySuccessfulConversions/myConversions) * 100) ? Math.round((mySuccessfulConversions/myConversions) * 100) : 0;
+      myOppConversionRate = Math.round((myOppSuccessfulConversions/myOppConversions) * 100) ? Math.round((myOppSuccessfulConversions/myOppConversions) * 100) : 0;
 
       // Damage Per Opening
-      myAvgDamagePerOpening = parseInt(myDamage/myOpenings) ? parseInt(myDamage/myOpenings) : 0;
-      myOppAvgDamagePerOpening = parseInt(myOppDamage/myOppOpenings) ? parseInt(myOppDamage/myOppOpenings) : 0;
+      myAvgDamagePerOpening = Math.round(myDamage/myOpenings) ? Math.round(myDamage/myOpenings) : 0;
+      myOppAvgDamagePerOpening = Math.round(myOppDamage/myOppOpenings) ? Math.round(myOppDamage/myOppOpenings) : 0;
 
       // Avg KO Percent
-      myAvgKOpercent = parseInt(myDamage/myKills) ? parseInt(myDamage/myKills) : 0;
-      myOppAvgKOpercent = parseInt(myOppDamage/myOppKills) ? parseInt(myOppDamage/myOppKills) : 0;
+      myAvgKOpercent = Math.round(myDamage/myKills) ? Math.round(myDamage/myKills) : 0;
+      myOppAvgKOpercent = Math.round(myOppDamage/myOppKills) ? Math.round(myOppDamage/myOppKills) : 0;
 
       // Avg L Cancel percentage
-      myLcancels = parseInt(myTotalLcancel/myTotalMatches);
-      myOppLcancels = parseInt(myOppTotalLcancel/myTotalMatches);
+      myLcancels = Math.round(myTotalLcancel/myTotalMatches);
+      myOppLcancels = Math.round(myOppTotalLcancel/myTotalMatches);
 
       // Avg Stocks Taken
       myAvgStocksTaken = myKills/myTotalMatches;
@@ -1125,8 +1125,8 @@ exports.findAll = (req, res) => {
       var quitoutmyOppCharUsagePercent = new Array(26).fill(0);
 
       for (let i = 0; i < quitoutmyCharUsage.length; i++) {
-        quitoutmyCharUsagePercent[i] = quitoutmyCharUsage[i] / myCharUsage[i] ? parseInt((quitoutmyCharUsage[i] / myCharUsage[i])*100) : 0;
-        quitoutmyOppCharUsagePercent[i] = quitoutmyOppCharUsage[i] / myOppCharUsage[i] ? parseInt((quitoutmyOppCharUsage[i] / myOppCharUsage[i]) * 100) : 0;
+        quitoutmyCharUsagePercent[i] = quitoutmyCharUsage[i] / myCharUsage[i] ? Math.round((quitoutmyCharUsage[i] / myCharUsage[i])*100) : 0;
+        quitoutmyOppCharUsagePercent[i] = quitoutmyOppCharUsage[i] / myOppCharUsage[i] ? Math.round((quitoutmyOppCharUsage[i] / myOppCharUsage[i]) * 100) : 0;
       }
 
       console.log('creating res obj')
