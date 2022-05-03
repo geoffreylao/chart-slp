@@ -573,7 +573,7 @@ function movesBarChartData(
   if(radio === 'Neutral Wins'){
     for (let i = 0; i < items.length; i++) {
       if(items[i][1] !== 0){
-        downb = items[i][0] === "12" ? neutralArr[items[i][0]][21] +neutralArr[items[i][0]][1] : neutralArr[items[i][0]][21]
+        downb = (items[i][0] === "12" || items[i][0] === "21" || items[i][0] === "6")? neutralArr[items[i][0]][21] + neutralArr[items[i][0]][1] : neutralArr[items[i][0]][21]
         movesArr.push(
           {
             label: (charDict[items[i][0]]).substring((charDict[items[i][0]]).lastIndexOf("/") + 1).replace(".png", ""),
@@ -625,7 +625,7 @@ function movesBarChartData(
   if(radio === 'Counter Hits'){
     for (let i = 0; i < items.length; i++) {
       if(items[i][1] !== 0){
-        downb = items[i][0] === "12" ? counterArr[items[i][0]][21] +counterArr[items[i][0]][1] : counterArr[items[i][0]][21]
+        downb = (items[i][0] === "12" || items[i][0] === "21" || items[i][0] === "6")? counterArr[items[i][0]][21] +counterArr[items[i][0]][1] : counterArr[items[i][0]][21]
         movesArr.push(
           {
             label: (charDict[items[i][0]]).substring((charDict[items[i][0]]).lastIndexOf("/") + 1).replace(".png", ""),
@@ -677,7 +677,7 @@ function movesBarChartData(
   if(radio === 'Trades'){
     for (let i = 0; i < items.length; i++) {
       if(items[i][1] !== 0){
-        downb = items[i][0] === "12" ? tradeArr[items[i][0]][21] +tradeArr[items[i][0]][1] : tradeArr[items[i][0]][21]
+        downb = (items[i][0] === "12" || items[i][0] === "21" || items[i][0] === "6")? tradeArr[items[i][0]][21] +tradeArr[items[i][0]][1] : tradeArr[items[i][0]][21]
         movesArr.push(
           {
             label: (charDict[items[i][0]]).substring((charDict[items[i][0]]).lastIndexOf("/") + 1).replace(".png", ""),
@@ -729,7 +729,7 @@ function movesBarChartData(
   if(radio === 'Kill Moves'){
     for (let i = 0; i < items.length; i++) {
       if(items[i][1] !== 0){
-        downb = items[i][0] === "12" ? killsArr[items[i][0]][21] +killsArr[items[i][0]][1] : killsArr[items[i][0]][21]
+        downb = (items[i][0] === "12" || items[i][0] === "21" || items[i][0] === "6")? killsArr[items[i][0]][21] +killsArr[items[i][0]][1] : killsArr[items[i][0]][21]
         movesArr.push(
           {
             label: (charDict[items[i][0]]).substring((charDict[items[i][0]]).lastIndexOf("/") + 1).replace(".png", ""),
