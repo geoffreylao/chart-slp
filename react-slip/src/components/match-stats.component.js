@@ -1066,17 +1066,32 @@ export default class MatchStats extends Component {
 
   searchCode() {
     
-    let mycode = this.searchCodeVal.current.value.replace("#", "-").toUpperCase();
-    let myoppcode = this.oppCodeVal.current.value.replace("#", "-").toUpperCase();
+    let mycode = this.searchCodeVal.current.value.replaceAll("#", "-").toUpperCase();
+    let myoppcode = this.oppCodeVal.current.value.replaceAll("#", "-").toUpperCase();
+
+    let myCodesArr = mycode.split(" ")
+    let myOppCodesArr = myoppcode.split(" ")
+
+
 
     this.setState({
       statsLoaded: "loading"
     });
 
-    let params = new URLSearchParams(`code=${mycode}`)
+    // let params = new URLSearchParams(`code=${mycode}`)
     
-    if(myoppcode){
-      params.append('oppcode', myoppcode);
+    let params = new URLSearchParams()
+
+    // if(myoppcode){
+    //   params.append('oppcode', myoppcode);
+    // }
+
+    for (let i = 0; i < myCodesArr.length; i++) {
+      params.append('code', myCodesArr[i]);
+    }
+
+    for (let i = 0; i < myOppCodesArr.length; i++) {
+      params.append('oppcode', myOppCodesArr[i]);
     }
 
     for (let i = 0; i < this.state.myCharValue.length; i++) {
@@ -1116,7 +1131,7 @@ export default class MatchStats extends Component {
             statsLoaded: "error",
           });
         }
-        
+        console.log(params)
         console.log(response.data);     
       })
       .catch(e => {
