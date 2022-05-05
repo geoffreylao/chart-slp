@@ -916,6 +916,7 @@ exports.findAll = (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
 
   let playerArr = [];
+  let removeOpp;
 
   code = req.query.code;
   let mycode = code ? code.replace("-", "#") : "";
@@ -923,7 +924,13 @@ exports.findAll = (req, res) => {
 
   oppcode = req.query.oppcode;
   let myoppcode = oppcode ? oppcode.replace("-", "#") : "" ;
-  myoppcode ? playerArr.push(myoppcode) : {} ;
+  if(myoppcode.startsWith("!")){
+    removeOpp = myoppcode.substring(1)
+  }else{
+    myoppcode ? playerArr.push(myoppcode) : {} ;
+  }
+  
+  console.log(removeOpp)
 
   let chararr = [
     "CAPTAIN_FALCON","DONKEY_KONG","FOX" ,"GAME_AND_WATCH","KIRBY",
@@ -972,18 +979,22 @@ exports.findAll = (req, res) => {
     var limit = 5000;
     var skip = 0;
 
+    var query ={
+      'players.code':{ $all: playerArr },
+      'players' : {$all: [{ $elemMatch : {code: mycode, characterString: {$in : characters} }},
+        { $elemMatch : {code: {$ne : String(removeOpp)}, characterString: {$in : oppcharacters } }}]},
+      'settings.stageString' : {$in: stages},
+      'metadata.gameComplete': {$in: complete},
+      'metadata.startAt' : {
+        $gte: startdate,
+        $lte: enddate
+      }
+    }
+
+    console.log(JSON.stringify(query, null, 2))
+
     do {        
-      const cursor = Match.find({
-        'players.code':{ $all: playerArr },
-        'players' : {$all: [{ $elemMatch : {code: mycode, characterString: {$in : characters} }},
-          { $elemMatch : {code: {$ne: mycode}, characterString: {$in : oppcharacters } }}]},
-        'settings.stageString' : {$in: stages},
-        'metadata.gameComplete': {$in: complete},
-        'metadata.startAt' : {
-          $gte: startdate,
-          $lte: enddate
-        }
-      }).lean().skip(skip).limit(limit)
+      const cursor = Match.find(query).lean().skip(skip).limit(limit)
       .cursor();
 
       // console.log('do count: ' + count)
