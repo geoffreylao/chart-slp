@@ -1,8 +1,8 @@
-import React, { Component } from "react"; //useState
+import React, { Component, useState } from "react"; //useState
 import MatchDataService from "../services/match.service";
 import ReactSpinner from 'react-bootstrap-spinner'
 import Select from 'react-select'
-//import Alert from 'react-bootstrap/Alert'
+import Alert from 'react-bootstrap/Alert'
 
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
@@ -925,6 +925,19 @@ function createSuccessWhiffBarChart(success, whiff, title, successLabel, whiffLa
   
 
 // }
+function AlertDismissible() {
+  const [show, setShow] = useState(true);
+
+    return (
+      <Alert variant="secondary" show={show} onClose={() => setShow(false)} dismissible>
+        <p className="alert">
+          <a href="https://discord.gg/cXTDr8TN8J" target="_blank" rel="noreferrer">
+            Join the Discord! <i className="fab fa-discord"></i>
+          </a>
+        </p>
+      </Alert>
+    );
+}
 
 export default class MatchStats extends Component {
   constructor(props) {
@@ -1125,6 +1138,7 @@ export default class MatchStats extends Component {
         });
       }); 
   }
+  
 
   render() {
     const { statsLoaded, myStats } = this.state;
@@ -1870,7 +1884,7 @@ export default class MatchStats extends Component {
       <div className="container mt-3">
       <div className="list row">
         <div className="col-md-12">
-        {/* <AlertDismissible/> */}
+        <AlertDismissible/>
           <Card>
             <Card.Body>
             <h2 id="searchParams">Search</h2>

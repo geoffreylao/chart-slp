@@ -1,5 +1,6 @@
-import { Component } from "react"; 
+import React, { Component, useState } from "react"; 
 import Select from 'react-select'
+import Alert from 'react-bootstrap/Alert'
 
 import PieChart from './charts/pie-chart.component';
 import CharBarChart from './charts/char-bar-chart.component';
@@ -256,6 +257,9 @@ var stageborderColorDict = {
   31 : 'rgba(33, 35, 48, 1)',
   32 : 'rgba(54, 15, 127, 1)',
 }
+
+
+
 function createPieChartCharacterUsage(charUsage, title, labelBool){
   var dict = {}
 
@@ -608,6 +612,20 @@ function createCharColorBarChart(charId, charColorsArr, title){
 
 }
 
+function AlertDismissible() {
+  const [show, setShow] = useState(true);
+
+    return (
+      <Alert variant="secondary" show={show} onClose={() => setShow(false)} dismissible>
+        <p className="alert">
+          <a href="https://discord.gg/cXTDr8TN8J" target="_blank" rel="noreferrer">
+            Join the Discord! <i className="fab fa-discord"></i>
+          </a>
+        </p>
+      </Alert>
+    );
+}
+
 export default class MatchStats extends Component {
   constructor(props){
     super(props);
@@ -740,6 +758,8 @@ export default class MatchStats extends Component {
     this.setState({selectStages: stages})
   }
 
+  
+
   myCharChange(e){
     console.log(e)
     this.setState({P1char: e})    
@@ -816,6 +836,7 @@ export default class MatchStats extends Component {
 
     return(
       <div className="container mt-3">
+        <AlertDismissible/>
         <div className="list row">
           <div className="col-md-12">
             <Container fluid>
@@ -828,7 +849,7 @@ export default class MatchStats extends Component {
 
         <div className="row">
           <div className="col-lg-12">
-            <h3 id="searchParams">Global Snapshot made on 2022-04-25 at 1006987 Games and 58835 Unique Players</h3>
+            <h3 id="searchParams">Global Snapshot made on 2022-05-24 at 1951460 Games and 77580 Unique Players</h3>
           </div>  
         </div>
 

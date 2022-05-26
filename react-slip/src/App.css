@@ -369,6 +369,19 @@ h1 {
   margin-right: 0;
 }
 
+/* Alert */
+.alert {
+  padding: 1%;
+  font-size: 1.55rem;
+  padding-bottom: 0;
+  text-align: center;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 /* Footer */
 .footer-logo {
   display: inline-block;
