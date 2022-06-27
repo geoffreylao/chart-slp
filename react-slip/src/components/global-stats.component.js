@@ -362,6 +362,24 @@ function createBarChartCharacterWinrate(myDict, charUsage, charWins, charLoss, t
       charborderColor.push(charborderColorDict[items[j][0]]);
     }    
   }
+  // "FOX","MARTH","JIGGLYPUFF","FALCO",
+  // "SHEIK","CAPTAIN_FALCON","PEACH",
+  // "ICE_CLIMBERS","PIKACHU","YOSHI","SAMUS",
+  // "LUIGI","DR_MARIO",
+  // "GANONDORF","MARIO",
+  // "DONKEY_KONG","YOUNG_LINK","LINK","GAME_AND_WATCH",
+  // "MEWTWO","ROY","PICHU","NESS","ZELDA",
+  // "KIRBY","BOWSER"
+
+  // var tierlistOrder = [2,9,15,20,19,0,12,14,13,17,16,7,22,25,8,1,21,6,3,10,23,24,11,18,4,5];
+  // var tierlistData = [];
+
+  // for (let i = 0; i < tierlistOrder.length; i++) {
+  //   tierlistData[i] = charData[tierlistOrder[i]];
+  // }
+  
+
+  //console.log(tierlistData)
 
   return <CharBarChart 
             charData = {charData}
@@ -601,8 +619,8 @@ function createCharColorBarChart(charId, charColorsArr, title){
     colorData.push(charColorsArr[charId][i])
   }
 
-  console.log(colorData)
-  console.log(charImage)
+  // console.log(colorData)
+  // console.log(charImage)
 
   return < ColorBarChart
     colorData = {colorData}
@@ -761,7 +779,7 @@ export default class MatchStats extends Component {
   
 
   myCharChange(e){
-    console.log(e)
+    //console.log(e)
     this.setState({P1char: e})    
 
     this.setState({
@@ -925,18 +943,7 @@ export default class MatchStats extends Component {
           </div>        
         </div>
 
-        <div className="row">
-          <div className="col-lg-12 globalstats">
-            <div className="chartDiv">
-            {createCharColorBarChart(
-              Math.round(getKeyByValue(char_dict, this.state.P1char.value)), 
-              globalStats.globalCharColor,
-              `${this.state.P1char.label.props.children[0].props.src.replace(".png", "").replace("stock_icons/", "")} Colors`, 
-              )}
-            </div>
-            <hr></hr>
-          </div>    
-        </div>
+
 
         <div className="row">        
           <div className="col-lg-12 globalstats">
@@ -951,6 +958,19 @@ export default class MatchStats extends Component {
             </div>
             <hr></hr>
           </div>        
+        </div>
+
+        <div className="row">
+          <div className="col-lg-12 globalstats">
+            <div className="chartDiv">
+            {createCharColorBarChart(
+              Math.round(getKeyByValue(char_dict, this.state.P1char.value)), 
+              globalStats.globalCharColor,
+              `${this.state.P1char.label.props.children[0].props.src.replace(".png", "").replace("stock_icons/", "")} Colors`, 
+              )}
+            </div>
+            <hr></hr>
+          </div>    
         </div>
 
         <div className="row">        
