@@ -1624,49 +1624,53 @@ exports.getAllMatches = (req, res) => {
   console.log('starting global');
   console.time('global');
 
-  co(function* () {
-    var docCount = 0;
-    var count = 0;
-    var limit = 5000;
-    var skip = 0;
+  for await(const doc of Match.find({
+          players: { $elemMatch: { characterString: { $in: chararr } } },
+          'settings.stageString': { $in: stagearr },
+        })
+          .lean()){
+            accumulateGlobalStats(doc);
+          }
+  // co(function* () {
+  //   var docCount = 0;
+  //   var count = 0;
+  //   var limit = 5000;
+  //   var skip = 0;
 
-    do {
-      const cursor = Match.find({
-        players: { $elemMatch: { characterString: { $in: chararr } } },
-        'settings.stageString': { $in: stagearr },
-      })
-        .lean()
-        .skip(skip)
-        .limit(limit)
-        .cursor();
+  //   do {
+  //     const cursor = Match.find({
+  //       players: { $elemMatch: { characterString: { $in: chararr } } },
+  //       'settings.stageString': { $in: stagearr },
+  //     })
+  //       .lean()
+  //       .skip(skip)
+  //       .limit(limit)
+  //       .cursor();
 
-      // console.log('do count: ' + count)
-      // console.log('skip: ' + skip)
-      docCount = 0;
+  //     // console.log('do count: ' + count)
+  //     // console.log('skip: ' + skip)
+  //     docCount = 0;
 
-      //for (let doc = yield cursor.next(); doc != null; doc = yield cursor.next()) {
-      // docCount++;
-      // accumulateGlobalStats(doc);
-      //}
+  //     //for (let doc = yield cursor.next(); doc != null; doc = yield cursor.next()) {
+  //     // docCount++;
+  //     // accumulateGlobalStats(doc);
+  //     //}
 
-      cursor.on('data', (data) => {
-        docCount++;
-        accumulateGlobalStats(doc);
-      });
+   
 
-      //console.log(docCount)
+  //     //console.log(docCount)
 
-      if (count === 0 && docCount === 0) {
-        console.log('no matches');
+  //     if (count === 0 && docCount === 0) {
+  //       console.log('no matches');
 
-        res.send('fail');
+  //       res.send('fail');
 
-        return;
-      }
+  //       return;
+  //     }
 
-      count++;
-      skip = count * limit;
-    } while (docCount !== 0);
+  //     count++;
+  //     skip = count * limit;
+  //   } while (docCount !== 0);
 
     //res.end("complete")
 
@@ -1703,7 +1707,7 @@ exports.getAllMatches = (req, res) => {
     console.timeEnd('global');
     res.end(JSON.stringify(globalStats));
     //res.send(globalStats)
-  });
+  //});
 };
 
 exports.uploadSingle = (req, res) => {
