@@ -343,9 +343,9 @@ function createBarChartCharacterWinrate(
     return [key, dict[key]];
   });
 
-  items.sort(function (first, second) {
-    return second[1] - first[1];
-  });
+  // items.sort(function (first, second) {
+  //   return second[1] - first[1];
+  // });
 
   var charLabels = [];
   var charData = [];
@@ -386,19 +386,19 @@ function createBarChartCharacterWinrate(
   // "MEWTWO","ROY","PICHU","NESS","ZELDA",
   // "KIRBY","BOWSER"
 
-  // var tierlistOrder = [
-  //   2, 9, 15, 20, 19, 0, 12, 14, 13, 17, 16, 7, 22, 25, 8, 1, 21, 6, 3, 10, 23,
-  //   24, 11, 18, 4, 5,
-  // ];
-  // var tierlistData = [];
+  var tierlistOrder = [
+    2, 9, 15, 20, 19, 0, 12, 14, 13, 17, 16, 7, 22, 25, 8, 1, 21, 6, 3, 10, 23,
+    24, 11, 18, 4, 5,
+  ];
+  var tierlistData = [];
 
-  //console.log('c' + charData);
+  console.log('c' + charData);
 
-  // for (let i = 0; i < tierlistOrder.length; i++) {
-  //   tierlistData[i] = charData[tierlistOrder[i]];
-  // }
+  for (let i = 0; i < tierlistOrder.length; i++) {
+    tierlistData[i] = charData[tierlistOrder[i]];
+  }
 
-  //console.log('' + tierlistData);
+  console.log('ordered: ' + tierlistData);
 
   return (
     <CharBarChart
@@ -1011,22 +1011,32 @@ export default class MatchStats extends Component {
                     <hr></hr>
                   </div>
                 </div>
-                <div className='row'>
-                  <div className='col-lg-12'>
-                    <h3 id='searchParams'>Global Matchup Chart</h3>
-                  </div>
-                  <img
-                    src='muchart.png'
-                    alt=''
-                    style={{
-                      width: '65%',
-                      display: 'block',
-                      'margin-left': 'auto',
-                      'margin-right': 'auto',
-                    }}
-                  />
-                </div>
+     
               </div>
+
+
+              <h3 id='searchParams'>Global Matchup Chart</h3>
+      
+              
+          
+              <div id="Iframe-Liason-Sheet" class="iframe-border center-block-horiz">
+ <div class="responsive-wrapper responsive-wrapper-wxh-550x2000">
+   <iframe title="test" frameBorder="0" src="https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTfU48fVAWQ19jz2q_dFnILhF4X5I-9bLORrHpoYo-QpRA0u6D3RSlTH5aw8k4JDNDIX5F7iR-Mc9vn/pubhtml?gid=299811758&amp;single=true&amp;widget=false&amp;headers=false&amp;rm=minimal&amp;&chrome=false&format=image"> 
+     <p style={{"font-size": "110%"}}><em><strong>ERROR: </strong>An iframe should be displayed here but your browser version does not support iframes.</em> Please update your browser to its most recent version and try again.</p>
+   </iframe>
+ </div>
+</div> 
+
+
+
+
+
+
+            
+           
+       
+              <hr/>
+           
 
               <div className='row'>
                 <div className='col-lg-12 globalstats'>
