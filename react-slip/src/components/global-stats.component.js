@@ -11,7 +11,11 @@ import Donut from './charts/donut-chart.component';
 import Container from 'react-bootstrap/Container';
 import ColorBarChart from './charts/color-bar-chart.component';
 
+import MatchDataService from "../services/match.service";
 var globalObjModule = require('./global-stats.js');
+
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const doc = new GoogleSpreadsheet('1OUIuhXika7TMxu0SfPklH6JUQ4HGArkR3aqW1Wu0tMU');
 
 var char_dict = {
   0: 'CAPTAIN_FALCON',
@@ -257,6 +261,126 @@ var stageborderColorDict = {
   32: 'rgba(54, 15, 127, 1)',
 };
 
+function showTwoDigits(number) {
+  return ('00' + number).slice(-2);
+}
+
+function displayTime(currentFrame) {
+  var fps = 60;
+  var d = Math.floor(currentFrame / (24 * 60 * 60 * fps))
+  var h = Math.floor(currentFrame / (60 * 60 * fps) % 24);
+  var m = Math.floor(currentFrame / (60 * fps)) % 60;
+  var s = Math.floor(currentFrame / fps) % 60;
+  var f = currentFrame % fps;
+  return (
+    d + " days " + h + ' hours ' + showTwoDigits(m) + ' minutes ' + showTwoDigits(s) + ' seconds and    ' + showTwoDigits(f) + ' frames'
+  );
+}
+
+
+function populateMUChart(charUsage, charWins, charLoss){
+  var dict = {};
+  var windict = {};
+  var lossdict = {};
+
+  for (let i = 0; i < charUsage.length; i++) {
+    dict[i] = charUsage[i];
+    windict[i] = charWins[i];
+    lossdict[i] = charLoss[i];
+  }
+
+  var items = Object.keys(dict).map(function (key) {
+    return [key, dict[key]];
+  });
+
+  var charData = [];
+
+  for (let j = 0; j < items.length; j++) {
+    if (items[j][1] !== 0) {
+
+      var wins = charWins[items[j][0]];
+      var loss = charLoss[items[j][0]];
+
+      if (wins === 0) {
+        charData.push(0);
+      } else {
+        charData.push(Math.round((wins / (wins + loss)) * 100));
+      }
+
+      var tierlistOrder = [
+        2, 9, 15, 20, 19, 0, 12, 14, 13, 17, 16, 7, 22, 25, 8, 1, 21, 6, 3, 10, 23,
+        24, 11, 18, 4, 5,
+      ];
+      var tierlistData = [];
+    
+      for (let i = 0; i < tierlistOrder.length; i++) {
+        tierlistData[i] = charData[tierlistOrder[i]];
+      }
+    
+     
+    }
+  }
+
+ // console.log('ordered: ' + tierlistData);
+  return(tierlistData);
+}
+
+function add(accumulator, a) {
+  return accumulator + a;
+}
+
+function parseGlobalCharWinrate(
+  globalCharStageWins,
+  globalCharStageLoss,
+  charId
+) {
+  let resultsObj = {
+    charUsage: Array(26).fill(0),
+    charWins: Array(26).fill(0),
+    charLoss: Array(26).fill(0),
+  };
+
+  for (let i = 0; i < 26; i++) {
+    resultsObj.charWins[i] = globalCharStageWins[charId][i]
+      .flat()
+      .reduce(add, 0);
+    resultsObj.charUsage[i] += globalCharStageWins[charId][i]
+      .flat()
+      .reduce(add, 0);
+
+    resultsObj.charLoss[i] = globalCharStageLoss[charId][i]
+      .flat()
+      .reduce(add, 0);
+    resultsObj.charUsage[i] += globalCharStageLoss[charId][i]
+      .flat()
+      .reduce(add, 0);
+  }
+
+  return resultsObj;
+}
+
+function parseGlobalFirstBloodCharWinrate(
+  globalCharFirstBloodWins,
+  globalCharFirstBloodLoss,
+  charId
+){
+  let resultsObj = {
+    charUsage: Array(26).fill(0),
+    charWins: Array(26).fill(0),
+    charLoss: Array(26).fill(0),
+  };
+
+  for (let i = 0; i < 26; i++) {
+    resultsObj.charWins[i] = globalCharFirstBloodWins[charId][i]
+    resultsObj.charUsage[i] += globalCharFirstBloodWins[charId][i]
+
+    resultsObj.charLoss[i] = globalCharFirstBloodLoss[charId][i]
+    resultsObj.charUsage[i] += globalCharFirstBloodLoss[charId][i] 
+  }
+
+  return resultsObj;
+}
+
 function createPieChartCharacterUsage(charUsage, title, labelBool) {
   var dict = {};
 
@@ -392,13 +516,13 @@ function createBarChartCharacterWinrate(
   ];
   var tierlistData = [];
 
-  console.log('c' + charData);
+  //console.log('c' + charData);
 
   for (let i = 0; i < tierlistOrder.length; i++) {
     tierlistData[i] = charData[tierlistOrder[i]];
   }
 
-  console.log('ordered: ' + tierlistData);
+  //console.log('ordered: ' + tierlistData);
 
   return (
     <CharBarChart
@@ -575,10 +699,6 @@ function getKeyByValue(object, value) {
   return Object.keys(object).find((key) => object[key] === value);
 }
 
-function add(accumulator, a) {
-  return accumulator + a;
-}
-
 function parseVsCharWinrate(
   charStageWinsArr,
   charStageLossArr,
@@ -598,38 +718,6 @@ function parseVsCharWinrate(
     .reduce(add, 0);
 
   return winLossObj;
-}
-
-function parseGlobalCharWinrate(
-  globalCharStageWins,
-  globalCharStageLoss,
-  charId
-) {
-  let resultsObj = {
-    charUsage: Array(26).fill(0),
-    charWins: Array(26).fill(0),
-    charLoss: Array(26).fill(0),
-  };
-
-  for (let i = 0; i < 26; i++) {
-    resultsObj.charWins[i] = globalCharStageWins[charId][i]
-      .flat()
-      .reduce(add, 0);
-    resultsObj.charUsage[i] += globalCharStageWins[charId][i]
-      .flat()
-      .reduce(add, 0);
-
-    resultsObj.charLoss[i] = globalCharStageLoss[charId][i]
-      .flat()
-      .reduce(add, 0);
-    resultsObj.charUsage[i] += globalCharStageLoss[charId][i]
-      .flat()
-      .reduce(add, 0);
-  }
-
-  //console.log(resultsObj)
-
-  return resultsObj;
 }
 
 function createCharColorBarChart(charId, charColorsArr, title) {
@@ -778,8 +866,22 @@ export default class MatchStats extends Component {
       },
       P1vsP2: {},
       P1vsGlobal: {},
+      P1vsFirstBlood: {}
     };
   }
+
+  async connect() {
+    MatchDataService.getSheet().then(response => {
+
+      doc.useServiceAccountAuth({
+        // env var values are copied from service account credentials generated by google
+        // see "Authentication" section in docs for more info
+        client_email: "chartslp-service-account@chartslp.iam.gserviceaccount.com",
+        private_key: response.data.private_key
+      });
+      
+    })
+  };
 
   async getCharacters() {
     let chararr = [
@@ -858,6 +960,38 @@ export default class MatchStats extends Component {
     this.setState({ selectCharacters: characters });
   }
 
+  async populateSheet(gstats){
+    var tierlistOrder = [
+      2, 9, 15, 20, 19, 0, 12, 14, 13, 17, 16, 7, 22, 25, 8, 1, 21, 6, 3, 10, 23,
+      24, 11, 18, 4, 5,
+    ];
+  
+    await doc.loadInfo(); // loads document properties and worksheets
+    console.log(doc.title);
+    const sheet = doc.sheetsByIndex[0];
+  
+    await sheet.loadCells('A1:AA27'); // loads range of cells into local cache - DOES NOT RETURN THE CELLS
+  
+    for (let i = 0; i < tierlistOrder.length; i++) {
+      let char = parseGlobalCharWinrate(gstats.gloabalCharStageWins, gstats.globalCharStageLoss, tierlistOrder[i]);
+      let chararr = populateMUChart(char.charUsage, char.charWins, char.charLoss);
+      //let myarr = []
+  
+      for (let j = 0; j < 26; j++) {
+        if (i != j) {
+          let cell = sheet.getCell(i+1, j+1)
+          //myarr.push(chararr[j]);
+          cell.value = chararr[j];
+        }
+       
+        
+      }
+  
+     // console.log(i + " : " + myarr);
+    }
+    await sheet.saveUpdatedCells();
+  }
+
   async getStages() {
     let stagearr = [
       'FOUNTAIN_OF_DREAMS',
@@ -915,6 +1049,14 @@ export default class MatchStats extends Component {
         Math.round(getKeyByValue(char_dict, e.value))
       ),
     });
+
+    this.setState({
+      P1vsFirstBlood: parseGlobalFirstBloodCharWinrate(
+        this.state.globalStats.globalCharFirstBloodWins,
+        this.state.globalStats.globalCharFirstBloodLoss,
+        Math.round(getKeyByValue(char_dict, e.value))
+      ),
+    });
   }
 
   oppCharChange(e) {
@@ -943,6 +1085,7 @@ export default class MatchStats extends Component {
   componentDidMount() {
     this.getCharacters();
     this.getStages();
+    this.connect()
 
     this.setState({
       P1vsP2: parseVsCharWinrate(
@@ -951,47 +1094,93 @@ export default class MatchStats extends Component {
         Math.round(getKeyByValue(char_dict, this.state.P1char.value)),
         Math.round(getKeyByValue(char_dict, this.state.P2char.value))
       ),
+
     });
+
+    MatchDataService.getPlayers().then(response => {
+      this.setState({
+        playersTotal: response.data
+      })
+      console.log(response.data)
+    })
+
+    MatchDataService.getAll().then(response => {
+      this.setState({
+        gamesTotal: response.data
+      })
+      console.log(response.data)
+    })
+
+    MatchDataService.getGlobal().then(response =>{
+      console.log(response.data);
+      this.setState({
+        globalStats: response.data,     
+      },()=>{
+        this.populateSheet(this.state.globalStats);
+        this.setState({
+          P1vsP2: parseVsCharWinrate(
+            this.state.globalStats.gloabalCharStageWins,
+            this.state.globalStats.globalCharStageLoss,
+            Math.round(getKeyByValue(char_dict, this.state.P1char.value)),
+            Math.round(getKeyByValue(char_dict, this.state.P2char.value))
+          ),
+          P1vsGlobal: parseGlobalCharWinrate(
+            this.state.globalStats.gloabalCharStageWins,
+            this.state.globalStats.globalCharStageLoss,
+            Math.round(getKeyByValue(char_dict, this.state.P1char.value))
+          ),
+         
+            P1vsFirstBlood: parseGlobalFirstBloodCharWinrate(
+              this.state.globalStats.globalCharFirstBloodWins,
+              this.state.globalStats.globalCharFirstBloodLoss,
+              Math.round(getKeyByValue(char_dict,  this.state.P1char.value))
+            ),
+        
+        })
+      })
+    })
   }
 
   componentWillMount() {
     this.setState({
-      P1vsGlobal: parseGlobalCharWinrate(
-        this.state.globalStats.gloabalCharStageWins,
-        this.state.globalStats.globalCharStageLoss,
-        Math.round(getKeyByValue(char_dict, this.state.P1char.value))
-      ),
-    });
+      //  globalStats: response.data,
+        P1vsGlobal: parseGlobalCharWinrate(
+          this.state.globalStats.gloabalCharStageWins,
+          this.state.globalStats.globalCharStageLoss,
+          Math.round(getKeyByValue(char_dict, this.state.P1char.value))
+        ),
+        P1vsFirstBlood: parseGlobalFirstBloodCharWinrate(
+          this.state.globalStats.globalCharFirstBloodWins,
+          this.state.globalStats.globalCharFirstBloodLoss,
+          Math.round(getKeyByValue(char_dict,  this.state.P1char.value))
+        ),
+      })
+      
+      
+
+
+    //   console.log(this.state.globalStats);
+    // })
+
+  //  console.log(this.state.globalStats)
+
+
   }
 
   render() {
-    const { globalStats, P1vsP2, P1vsGlobal } = this.state;
+    const { globalStats, P1vsP2, P1vsGlobal, P1vsFirstBlood } = this.state;
 
     return (
       <div className='container mt-3'>
         {/* <AlertDismissible/> */}
         <div className='list row'>
           <div className='col-md-12'>
-            <Container fluid>
-              <div className='row'>
-                <div className='col-lg-12'>
-                  <h2 id='searchParams'>Global Stats</h2>
-                  <hr></hr>
-                </div>
-              </div>
-
-              <div className='row'>
-                <div className='col-lg-12'>
-                  <h3 id='searchParams'>
-                    Global Snapshot made on 2022-08-12 at 2491911 Matches and
-                    85630 Unique Players
-                  </h3>
-                </div>
-              </div>
+            <Container fluid>            
+        
 
               <div className='row'>
                 <div className='col-lg-12 globalstats'>
-                  <div className='chartDiv'>
+                  <div className='chartDivPie'>
                     {createPieChartCharacterUsage(
                       globalStats.globalCharUsage,
                       'Global Character Usage',
@@ -1010,18 +1199,46 @@ export default class MatchStats extends Component {
                     </label>
                     <hr></hr>
                   </div>
-                </div>
-     
+                </div>  
               </div>
 
+              <div>                
+                <h3 id='searchParams'>Data from {this.state.gamesTotal ? this.state.gamesTotal : '------'} Matches 
+                and {this.state.playersTotal ? this.state.playersTotal : '-----'}  Unique Players!</h3>
+                <h3 id='searchParams'>{displayTime(this.state.globalStats.globalFrames)} of Melee Played!</h3>
+                <h3 id='searchParams'>
+                  &nbsp; {this.state.globalStats.globalFalcoLasers} 
+          
+          &nbsp;Falco Lasers Hit..    &nbsp;
+          <img
+            src={`stock_icons/Falco.png`}
+            height='30px'
+            width='30px'
+            alt=''
+          />&nbsp;
+           <img
+            src={`Red_laser.png`}
+            height='30px'
+            width='150px'
+            alt=''
+          />    &nbsp;
 
+<img
+            src={`Red_laser.png`}
+            height='30px'
+            width='150px'
+            alt=''
+          />
+          </h3>
+                <hr></hr>
+              </div>
               <h3 id='searchParams'>Global Matchup Chart</h3>
       
               
           
               <div id="Iframe-Liason-Sheet" class="iframe-border center-block-horiz">
  <div class="responsive-wrapper responsive-wrapper-wxh-550x2000">
-   <iframe title="test" frameBorder="0" src="https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTfU48fVAWQ19jz2q_dFnILhF4X5I-9bLORrHpoYo-QpRA0u6D3RSlTH5aw8k4JDNDIX5F7iR-Mc9vn/pubhtml?gid=299811758&amp;single=true&amp;widget=false&amp;headers=false&amp;rm=minimal&amp;&chrome=false&format=image"> 
+   <iframe title="test" scrolling="no" seamless="seamless" frameBorder="0" src="https://docs.google.com/spreadsheets/u/2/d/e/2PACX-1vTWawPzfAF1Xwba0NAkud-04LDVe16hB27pcGVJM7JIHKQm1YkbzqTO4MtStIolY6ir3wcZteeGwgZO/pubhtml?gid=299811758&amp;single=true&amp;widget=false&amp;headers=false&amp;rm=minimal&amp;&chrome=false&format=image"> 
      <p style={{"font-size": "110%"}}><em><strong>ERROR: </strong>An iframe should be displayed here but your browser version does not support iframes.</em> Please update your browser to its most recent version and try again.</p>
    </iframe>
  </div>
@@ -1051,7 +1268,7 @@ export default class MatchStats extends Component {
                   </div>
                   <hr></hr>
                 </div>
-              </div>
+              </div>      
 
               <div className='row'>
                 <div className='col-lg-12 globalstats'>
@@ -1100,6 +1317,26 @@ export default class MatchStats extends Component {
                           'stock_icons/',
                           ''
                         )} vs Global Character Winrate %`
+                    )}
+                  </div>
+                  <hr></hr>
+                </div>
+              </div>
+
+              <div className='row'>
+                <div className='col-lg-12 globalstats'>
+                  <div className='chartDiv'>
+                    {createBarChartCharacterWinrate(
+                      charDict,
+                      P1vsFirstBlood.charUsage,
+                      P1vsFirstBlood.charWins,
+                      P1vsFirstBlood.charLoss,
+                      `${this.state.P1char.label.props.children[0].props.src
+                        .replace('.png', '')
+                        .replace(
+                          'stock_icons/',
+                          ''
+                        )} First Blood vs Character Winrate %`
                     )}
                   </div>
                   <hr></hr>

@@ -415,7 +415,6 @@ exports.create = (req, res) => {
 
   return req.pipe(req.busboy); // Pipe it trough busboy
 }
-
 // Retrieve all matches from the database 
 exports.findAll = (req, res) => {
   let myTotalMatches = 0;
@@ -1328,6 +1327,28 @@ exports.getPlayers = (req, res) => {
 
     res.send(data.length.toString())
   })
+}
+
+exports.getGlobal = (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  console.log("get global");
+  var filename = "app/public/global-stats.json";
+  var file_content = fs.readFileSync(filename);
+  var content = JSON.parse(file_content);
+
+  //console.log(content);
+  res.send(content);
+}
+
+exports.getSheet = (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+ 
+  var credentials = {
+    client_email: process.env.EMAIL,
+    private_key: process.env.KEY
+  }
+
+  res.send(credentials);
 }
 
 exports.uploadSingle = (req, res) => {

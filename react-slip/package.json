@@ -12,6 +12,8 @@
     "chart.js": "^2.9.4",
     "chartjs-plugin-doughnutlabel": "^2.0.3",
     "chartjs-plugin-labels": "^1.1.0",
+    "dotenv": "^16.0.3",
+    "google-spreadsheet": "^3.3.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-bootstrap-spinner": "^1.0.0",

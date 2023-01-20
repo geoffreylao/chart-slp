@@ -5,13 +5,15 @@ const busboy = require('connect-busboy');
 
 const app = express();
 
+const fs = require('fs');
+
 app.use(busboy({
   highWaterMark: 2 * 1024 * 1024
 }))
 
 var corsOptions = {
-  origin: "http://chartslp.netlify.app/"
-  //origin: "http://localhost:3000"
+  //origin: "http://chartslp.netlify.app/"
+  origin: "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));
@@ -93,10 +95,86 @@ db.mongoose
   })
   .then(() => {
     console.log("Connected to the database!");
+
+
   })
   .catch(err => {
     console.log("Cannot conenct to the database!", err);
   });
+
+
+db.matches.watch().on('change', data => {
+  console.log(data.fullDocument.matchid)
+
+  let validStage = [2,3,8,28,31,32];
+  // check valid characters and stages
+  if(data.fullDocument.players[0].characterId < 26 && data.fullDocument.players[1].characterId < 26 && validStage.includes(data.fullDocument.settings.stageId)){
+    var filename = "app/public/global-stats.json";
+    var file_content = fs.readFileSync(filename);
+    var content = JSON.parse(file_content);
+  
+    content.globalCharUsage[data.fullDocument.players[0].characterId]++;
+    content.globalCharUsage[data.fullDocument.players[1].characterId]++;
+
+    content.globalFrames += data.fullDocument.metadata.lastFrame;
+
+    for (let i = 0; i < data.fullDocument.players.length; i++) {
+      if(data.fullDocument.players[i].characterId === 20){
+        for (let j = 0; j < data.fullDocument.players[i].conversions.length; j++) {
+          for (let k = 0; k < data.fullDocument.players[i].conversions[j].moves.length; k++) {
+            if(data.fullDocument.players[i].conversions[j].moves[k].moveId === 18){
+              content.globalFalcoLasers++;
+            }            
+          }
+        }
+      }      
+    }
+
+
+  
+    if(
+      data.fullDocument.metadata.winner === 'INCOMPLETE' &&
+      data.fullDocument.metadata.lastFrame <= 3600
+    ){
+      content.globalCharQuitout[data.fullDocument.players[0].characterId]++;
+      content.globalCharQuitout[data.fullDocument.players[1].characterId]++;
+    }
+  
+    if(data.fullDocument.metadata.winner === data.fullDocument.players[0].code){
+      if(data.fullDocument.metadata.firstBlood === data.fullDocument.players[0].code){
+        content.globalCharFirstBloodWins[data.fullDocument.players[0].characterId][data.fullDocument.players[1].characterId]++;
+        content.globalCharFirstBloodLoss[data.fullDocument.players[1].characterId][data.fullDocument.players[0].characterId]++;
+      }
+      content.globalCharWins[data.fullDocument.players[0].characterId]++;
+      content.globalCharLoss[data.fullDocument.players[1].characterId]++;
+      content.gloabalCharStageWins[data.fullDocument.players[0].characterId][data.fullDocument.players[1].characterId][data.fullDocument.settings.stageId]++;
+      content.globalCharStageLoss[data.fullDocument.players[1].characterId][data.fullDocument.players[0].characterId][data.fullDocument.settings.stageId]++;
+    }
+  
+    if(data.fullDocument.metadata.winner === data.fullDocument.players[1].code){
+      if(data.fullDocument.metadata.firstBlood === data.fullDocument.players[1].code){
+        content.globalCharFirstBloodWins[data.fullDocument.players[1].characterId][data.fullDocument.players[0].characterId]++;
+        content.globalCharFirstBloodLoss[data.fullDocument.players[0].characterId][data.fullDocument.players[1].characterId]++;
+      }
+      content.globalCharWins[data.fullDocument.players[1].characterId]++;
+      content.globalCharLoss[data.fullDocument.players[0].characterId]++;
+      content.gloabalCharStageWins[data.fullDocument.players[1].characterId][data.fullDocument.players[0].characterId][data.fullDocument.settings.stageId]++;
+      content.globalCharStageLoss[data.fullDocument.players[0].characterId][data.fullDocument.players[1].characterId][data.fullDocument.settings.stageId]++;
+    }
+  
+    content.globalCharColor[data.fullDocument.players[0].characterId][data.fullDocument.players[0].characterColor]++;
+    content.globalCharColor[data.fullDocument.players[1].characterId][data.fullDocument.players[1].characterColor]++;
+
+    if(content){
+      fs.writeFileSync("./app/public/global-stats.json", JSON.stringify(content));
+    }
+  }
+
+
+  //Serialize as JSON and Write it to a file
+  
+  
+})
 
 // simple route
 app.get("/", (req,res) => {

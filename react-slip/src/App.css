@@ -23,6 +23,14 @@ html {
   height: 100%;
 }
 
+.chartDivPie {
+  height: 98%;
+}
+
+.chartDivPie div {
+  height: 98%;
+}
+
 /* Search Params Form */
 #searchParams {
   text-align: center;
