@@ -978,7 +978,7 @@ export default class Secret extends Component {
       //let myarr = []
   
       for (let j = 0; j < 26; j++) {
-        if (i != j) {
+        if (i !== j) {
           let cell = sheet.getCell(i+1, j+1)
           //myarr.push(chararr[j]);
           cell.value = chararr[j];
