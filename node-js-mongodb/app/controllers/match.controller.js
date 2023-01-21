@@ -1356,126 +1356,127 @@ exports.uploadSingle = (req, res) => {
 
   console.log('external endpoint')
 
-  try {
-    var myobj = {
-      matchid: req.body.matchid,
-      settings: {
-        isTeams: req.body.settings.isTeams,
-        isPal: req.body.settings.isPal,
-        stageId: req.body.settings.stageId,
-        stageString: req.body.settings.stageString,
-      },
-      metadata: {
-        startAt: req.body.metadata.startAt,
-        lastFrame: req.body.metadata.lastFrame,
-        minutes: req.body.metadata.minutes,
-        gameComplete: req.body.metadata.gameComplete,
-        winner: req.body.metadata.winner,
-        firstBlood: req.body.metadata.firstBlood
-      }, 
-      players: [
-        {
-          playerIndex: req.body.players[0].playerIndex,
-          characterId: req.body.players[0].characterId,
-          characterColor: req.body.players[0].characterColor,
-          code: req.body.players[0].code,
-          name: req.body.players[0].name,
-          characterString: req.body.players[0].characterString,
-          actionCounts: {
-            wavedashCount: req.body.players[0].actionCounts.wavedashCount,
-            wavelandCount: req.body.players[0].actionCounts.wavelandCount,
-            airDodgeCount: req.body.players[0].actionCounts.airDodgeCount,
-            dashDanceCount: req.body.players[0].actionCounts.dashDanceCount,
-            spotDodgeCount: req.body.players[0].actionCounts.spotDodgeCount,
-            ledgegrabCount: req.body.players[0].actionCounts.ledgegrabCount,
-            rollCount: req.body.players[0].actionCounts.rollCount
-          },
-          conversions: req.body.players[0].conversions,
-          inputCounts: {
-            buttons: req.body.players[0].inputCounts.buttons, // digital inputs
-            triggers: req.body.players[0].inputCounts.triggers,
-            cstick: req.body.players[0].inputCounts.cstick,
-            joystick: req.body.players[0].inputCounts.joystick,
-            total: req.body.players[0].inputCounts.total // total inputs
-          },
-          conversionCount: req.body.players[0].conversionCount,
-          totalDamage: req.body.players[0].totalDamage,
-          killCount: req.body.players[0].killCount,
-          creditedKillCount: req.body.players[0].creditedKillCount,
-          successfulConversions: req.body.players[0].successfulConversions,
-          openings: req.body.players[0].openings,
-          neutralWins: req.body.players[0].neutralWins,
-          counterHits: req.body.players[0].counterHits,
-          trades: req.body.players[0].trades,
-          deathCount: req.body.players[0].deathCount,
-          lcancelPercent: req.body.players[0].lcancelPercent,
-          grabCount: req.body.players[0].grabCount,
-          throwCount: req.body.players[0].throwCount,
-          groundTechCount: req.body.players[0].groundTechCount,
-          wallTechCount: req.body.players[0].wallTechCount,
-          stocks: req.body.players[0].stocks
-        },
-        {
-          playerIndex: req.body.players[1].playerIndex,
-          characterId: req.body.players[1].characterId,
-          characterColor: req.body.players[1].characterColor,
-          code: req.body.players[1].code,
-          name: req.body.players[1].name,
-          characterString: req.body.players[1].characterString,
-          actionCounts: {
-            wavedashCount: req.body.players[1].actionCounts.wavedashCount,
-            wavelandCount: req.body.players[1].actionCounts.wavelandCount,
-            airDodgeCount: req.body.players[1].actionCounts.airDodgeCount,
-            dashDanceCount: req.body.players[1].actionCounts.dashDanceCount,
-            spotDodgeCount: req.body.players[1].actionCounts.spotDodgeCount,
-            ledgegrabCount: req.body.players[1].actionCounts.ledgegrabCount,
-            rollCount: req.body.players[1].actionCounts.rollCount
-          },
-          conversions: req.body.players[1].conversions,
-          inputCounts: {
-            buttons: req.body.players[1].inputCounts.buttons, // digital inputs
-            triggers: req.body.players[1].inputCounts.triggers,
-            cstick: req.body.players[1].inputCounts.cstick,
-            joystick: req.body.players[1].inputCounts.joystick,
-            total: req.body.players[1].inputCounts.total // total inputs
-          },
-          conversionCount: req.body.players[1].conversionCount,
-          totalDamage: req.body.players[1].totalDamage,
-          killCount: req.body.players[1].killCount,
-          creditedKillCount: req.body.players[1].creditedKillCount,
-          successfulConversions: req.body.players[1].successfulConversions,
-          openings: req.body.players[1].openings,
-          neutralWins: req.body.players[1].neutralWins,
-          counterHits: req.body.players[1].counterHits,
-          trades: req.body.players[1].trades,
-          deathCount: req.body.players[1].deathCount,
-          lcancelPercent: req.body.players[1].lcancelPercent,
-          grabCount: req.body.players[1].grabCount,
-          throwCount: req.body.players[1].throwCount,
-          groundTechCount: req.body.players[1].groundTechCount,
-          wallTechCount: req.body.players[1].wallTechCount,
-          stocks: req.body.players[1].stocks
-        }
-      ],
-    };
+  res.send('match uploads are temporarliy down, sorry for the inconvenience!')
+  // try {
+  //   var myobj = {
+  //     matchid: req.body.matchid,
+  //     settings: {
+  //       isTeams: req.body.settings.isTeams,
+  //       isPal: req.body.settings.isPal,
+  //       stageId: req.body.settings.stageId,
+  //       stageString: req.body.settings.stageString,
+  //     },
+  //     metadata: {
+  //       startAt: req.body.metadata.startAt,
+  //       lastFrame: req.body.metadata.lastFrame,
+  //       minutes: req.body.metadata.minutes,
+  //       gameComplete: req.body.metadata.gameComplete,
+  //       winner: req.body.metadata.winner,
+  //       firstBlood: req.body.metadata.firstBlood
+  //     }, 
+  //     players: [
+  //       {
+  //         playerIndex: req.body.players[0].playerIndex,
+  //         characterId: req.body.players[0].characterId,
+  //         characterColor: req.body.players[0].characterColor,
+  //         code: req.body.players[0].code,
+  //         name: req.body.players[0].name,
+  //         characterString: req.body.players[0].characterString,
+  //         actionCounts: {
+  //           wavedashCount: req.body.players[0].actionCounts.wavedashCount,
+  //           wavelandCount: req.body.players[0].actionCounts.wavelandCount,
+  //           airDodgeCount: req.body.players[0].actionCounts.airDodgeCount,
+  //           dashDanceCount: req.body.players[0].actionCounts.dashDanceCount,
+  //           spotDodgeCount: req.body.players[0].actionCounts.spotDodgeCount,
+  //           ledgegrabCount: req.body.players[0].actionCounts.ledgegrabCount,
+  //           rollCount: req.body.players[0].actionCounts.rollCount
+  //         },
+  //         conversions: req.body.players[0].conversions,
+  //         inputCounts: {
+  //           buttons: req.body.players[0].inputCounts.buttons, // digital inputs
+  //           triggers: req.body.players[0].inputCounts.triggers,
+  //           cstick: req.body.players[0].inputCounts.cstick,
+  //           joystick: req.body.players[0].inputCounts.joystick,
+  //           total: req.body.players[0].inputCounts.total // total inputs
+  //         },
+  //         conversionCount: req.body.players[0].conversionCount,
+  //         totalDamage: req.body.players[0].totalDamage,
+  //         killCount: req.body.players[0].killCount,
+  //         creditedKillCount: req.body.players[0].creditedKillCount,
+  //         successfulConversions: req.body.players[0].successfulConversions,
+  //         openings: req.body.players[0].openings,
+  //         neutralWins: req.body.players[0].neutralWins,
+  //         counterHits: req.body.players[0].counterHits,
+  //         trades: req.body.players[0].trades,
+  //         deathCount: req.body.players[0].deathCount,
+  //         lcancelPercent: req.body.players[0].lcancelPercent,
+  //         grabCount: req.body.players[0].grabCount,
+  //         throwCount: req.body.players[0].throwCount,
+  //         groundTechCount: req.body.players[0].groundTechCount,
+  //         wallTechCount: req.body.players[0].wallTechCount,
+  //         stocks: req.body.players[0].stocks
+  //       },
+  //       {
+  //         playerIndex: req.body.players[1].playerIndex,
+  //         characterId: req.body.players[1].characterId,
+  //         characterColor: req.body.players[1].characterColor,
+  //         code: req.body.players[1].code,
+  //         name: req.body.players[1].name,
+  //         characterString: req.body.players[1].characterString,
+  //         actionCounts: {
+  //           wavedashCount: req.body.players[1].actionCounts.wavedashCount,
+  //           wavelandCount: req.body.players[1].actionCounts.wavelandCount,
+  //           airDodgeCount: req.body.players[1].actionCounts.airDodgeCount,
+  //           dashDanceCount: req.body.players[1].actionCounts.dashDanceCount,
+  //           spotDodgeCount: req.body.players[1].actionCounts.spotDodgeCount,
+  //           ledgegrabCount: req.body.players[1].actionCounts.ledgegrabCount,
+  //           rollCount: req.body.players[1].actionCounts.rollCount
+  //         },
+  //         conversions: req.body.players[1].conversions,
+  //         inputCounts: {
+  //           buttons: req.body.players[1].inputCounts.buttons, // digital inputs
+  //           triggers: req.body.players[1].inputCounts.triggers,
+  //           cstick: req.body.players[1].inputCounts.cstick,
+  //           joystick: req.body.players[1].inputCounts.joystick,
+  //           total: req.body.players[1].inputCounts.total // total inputs
+  //         },
+  //         conversionCount: req.body.players[1].conversionCount,
+  //         totalDamage: req.body.players[1].totalDamage,
+  //         killCount: req.body.players[1].killCount,
+  //         creditedKillCount: req.body.players[1].creditedKillCount,
+  //         successfulConversions: req.body.players[1].successfulConversions,
+  //         openings: req.body.players[1].openings,
+  //         neutralWins: req.body.players[1].neutralWins,
+  //         counterHits: req.body.players[1].counterHits,
+  //         trades: req.body.players[1].trades,
+  //         deathCount: req.body.players[1].deathCount,
+  //         lcancelPercent: req.body.players[1].lcancelPercent,
+  //         grabCount: req.body.players[1].grabCount,
+  //         throwCount: req.body.players[1].throwCount,
+  //         groundTechCount: req.body.players[1].groundTechCount,
+  //         wallTechCount: req.body.players[1].wallTechCount,
+  //         stocks: req.body.players[1].stocks
+  //       }
+  //     ],
+  //   };
 
-    var match = new Match(myobj)
+  //   var match = new Match(myobj)
 
-    match
-    .save(match)
-    .then(data => {
-      console.log('inserted match')
-      res.send('inserted: ' + data.matchid )
-    })
-    .catch(err => {
-      if(err.code === 11000){        
-        console.log('inserted duplicates')
-        res.send('duplicates:' + match.matchid)
-      }        
-    });
+  //   match
+  //   .save(match)
+  //   .then(data => {
+  //     console.log('inserted match')
+  //     res.send('inserted: ' + data.matchid )
+  //   })
+  //   .catch(err => {
+  //     if(err.code === 11000){        
+  //       console.log('inserted duplicates')
+  //       res.send('duplicates:' + match.matchid)
+  //     }        
+  //   });
 
-  } catch (error) {
-    res.send('error bad match format')
-  }
+  // } catch (error) {
+  //   res.send('error bad match format')
+  // }
 
 }
