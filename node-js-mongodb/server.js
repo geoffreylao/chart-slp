@@ -12,8 +12,8 @@ app.use(busboy({
 }))
 
 var corsOptions = {
-  //origin: "http://chartslp.netlify.app/"
-  origin: "http://localhost:3000"
+  origin: "http://chartslp.netlify.app/"
+  //origin: "http://localhost:3000"
 };
 
 app.use(cors(corsOptions));
