@@ -879,6 +879,8 @@ export default class Secret extends Component {
         client_email: "chartslp-service-account@chartslp.iam.gserviceaccount.com",
         private_key: response.data.private_key
       });
+
+      console.log("connect()")
       
     })
   };
