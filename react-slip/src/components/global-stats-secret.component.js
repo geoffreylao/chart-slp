@@ -457,6 +457,11 @@ function createBarChartCharacterWinrate(
   var windict = {};
   var lossdict = {};
 
+  var tierlistOrder = [
+    2, 9, 15, 20, 19, 0, 12, 14, 13, 17, 16, 7, 22, 25, 8, 1, 21, 6, 3, 10, 23,
+    24, 11, 18, 4, 5,
+  ];
+
   for (let i = 0; i < charUsage.length; i++) {
     dict[i] = charUsage[i];
     windict[i] = charWins[i];
@@ -467,6 +472,18 @@ function createBarChartCharacterWinrate(
     return [key, dict[key]];
   });
 
+  
+  //console.log(items)
+
+  var tempItems = [...Array(26)].map(e => Array(2));
+
+  for (let i = 0; i < items.length; i++) {
+    tempItems[i][0] = items[tierlistOrder[i]][0];
+    tempItems[i][1] = items[tierlistOrder[i]][1];
+    
+  }
+
+  items = tempItems;
   // items.sort(function (first, second) {
   //   return second[1] - first[1];
   // });
@@ -510,17 +527,12 @@ function createBarChartCharacterWinrate(
   // "MEWTWO","ROY","PICHU","NESS","ZELDA",
   // "KIRBY","BOWSER"
 
-  var tierlistOrder = [
-    2, 9, 15, 20, 19, 0, 12, 14, 13, 17, 16, 7, 22, 25, 8, 1, 21, 6, 3, 10, 23,
-    24, 11, 18, 4, 5,
-  ];
-  var tierlistData = [];
+ 
+  // var tierlistData = [];
 
-  //console.log('c' + charData);
+  // //console.log('c' + charData);
 
-  for (let i = 0; i < tierlistOrder.length; i++) {
-    tierlistData[i] = charData[tierlistOrder[i]];
-  }
+  
 
   //console.log('ordered: ' + tierlistData);
 
