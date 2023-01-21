@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import Select from 'react-select';
-//import Alert from 'react-bootstrap/Alert';
+import Alert from 'react-bootstrap/Alert';
 
 import PieChart from './charts/pie-chart.component';
 import CharBarChart from './charts/char-bar-chart.component';
@@ -682,28 +682,24 @@ function createCharColorBarChart(charId, charColorsArr, title) {
   );
 }
 
-// function AlertDismissible() {
-//   const [show, setShow] = useState(true);
+function AlertDismissible() {
+  const [show, setShow] = useState(true);
 
-//   return (
-//     <Alert
-//       variant='secondary'
-//       show={show}
-//       onClose={() => setShow(false)}
-//       dismissible
-//     >
-//       <p className='alert'>
-//         <a
-//           href='https://discord.gg/cXTDr8TN8J'
-//           target='_blank'
-//           rel='noreferrer'
-//         >
-//           Join the Discord! <i className='fab fa-discord'></i>
-//         </a>
-//       </p>
-//     </Alert>
-//   );
-// }
+  return (
+    <Alert
+      variant='secondary'
+      show={show}
+      onClose={() => setShow(false)}
+      dismissible
+    >
+      <p className='alert'>
+        
+        Match uploads are temporarliy paused, sorry for the inconvenience!
+        
+      </p>
+    </Alert>
+  );
+}
 
 export default class MatchStats extends Component {
   constructor(props) {
@@ -969,7 +965,7 @@ export default class MatchStats extends Component {
 
     return (
       <div className='container mt-3'>
-        {/* <AlertDismissible/> */}
+        <AlertDismissible/>
         <div className='list row'>
           <div className='col-md-12'>
             <Container fluid>
