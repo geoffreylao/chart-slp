@@ -1,4 +1,5 @@
-import React, { Component 
+import React, {
+  Component,
   //,useState
 } from 'react'; //useState
 import MatchDataService from '../services/match.service';
@@ -1168,7 +1169,7 @@ function createSuccessWhiffBarChart(
 //       <Alert variant="secondary" show={show} onClose={() => setShow(false)} dismissible>
 //         <p>
 //         Match uploads are temporarliy paused, sorry for the inconvenience!
-        
+
 //         </p>
 //       </Alert>
 //     );
@@ -2359,7 +2360,7 @@ export default class MatchStats extends Component {
                       <input
                         type='text'
                         className='form-control'
-                        placeholder='Opponents Connect Code'
+                        placeholder="Opponents Connect Code (to exclude start their code with '!')"
                         // value={oppCode}
                         ref={this.oppCodeVal}
                         onKeyPress={(event) => {
