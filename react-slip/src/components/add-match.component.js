@@ -129,7 +129,9 @@ export default class AddMatch extends Component {
                       {renderFiles()}
                     </div>
                     <div className="form-group">
-                      <button className="btn btn-secondary" type="submit" disabled>UPLOAD</button>
+                      <button className="btn btn-secondary" type="submit" 
+                      //disabled
+                      >UPLOAD</button>
                     </div>
                   </form>
                 </div>
