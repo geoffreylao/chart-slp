@@ -75,6 +75,23 @@ var charDict = {
   25: 'https://i.ibb.co/3TyxwcJ/Ganondorf.png',
 };
 
+
+
+// BACKGROUND BOREDER HOVER
+var colorChartDict = {
+  WHITE: ['rgba(192, 192, 192, 0.4)','rgba(100, 100, 100, 1 )','rgba(192, 192, 192, 0.6)'],
+  RED: ['rgba(255, 65, 50, 0.2)','rgba(255, 65, 50, 1)','rgba(255, 65, 50, 0.6)'],
+  BLUE: ['rgba(154, 162, 235, 0.3)','rgba(50, 5, 150, 0.5)','rgba(154, 162, 235, 0.6)'],
+  GREEN: ['rgba(20, 150, 70, 0.2)','rgba(20, 150, 70, 1)','rgba(20, 150, 70, 0.6)'],
+  BLACK: ['rgba(15, 15, 15, 0.2)', 'rgba(15, 15, 15, 0.5)','rgba(15, 15, 15, 0.6)'],
+  BROWN: ['rgba(170, 85, 0, 0.2)','rgba(170, 85, 0, 1)','rgba(170, 85, 0, 0.6)'],
+  PINK:['rgba(255, 99, 255, 0.2)','rgba(255, 99, 255, 1)','rgba(255, 99, 255, 0.6)'],
+  YELLOW:['rgba(255, 242, 0, 0.3)','rgba(147, 147, 0, 1)','rgba(255, 242, 0, 0.6)'],
+  LIGHTBLUE:['rgba(54, 162, 235, 0.2)','rgba(54, 162, 235, 1)','rgba(54, 162, 235, 0.6)'],
+  ORANGE:['rgba(255, 159, 36, 0.2)','rgba(255, 159, 36, 1)', 'rgba(255, 159, 36, 0.6)'],
+  PURPLE:['rgba(153, 102, 255, 0.2)','rgba(153, 102, 255, 1)','rgba(153, 102, 255, 0.6)']
+}
+
 var charbackgroundColorDict = {
   0: 'rgba(255, 99, 132, 0.2)',
   1: 'rgba(170, 85, 0, 0.2)',
@@ -273,10 +290,9 @@ function displayTime(currentFrame) {
   var s = Math.floor(currentFrame / fps) % 60;
   var f = currentFrame % fps;
   return (
-    d + " days " + h + ' hours ' + showTwoDigits(m) + ' minutes ' + showTwoDigits(s) + ' seconds and    ' + showTwoDigits(f) + ' frames'
+    d.toLocaleString() + " days " + h + ' hours ' + showTwoDigits(m) + ' minutes ' + showTwoDigits(s) + ' seconds and    ' + showTwoDigits(f) + ' frames'
   );
 }
-
 
 function populateMUChart(charUsage, charWins, charLoss){
   var dict = {};
@@ -762,23 +778,61 @@ function createCharColorBarChart(charId, charColorsArr, title) {
     25: 5,
   };
 
+  var charColorDict = {
+    0: ['Blue','Black','Red','Pink','Green','LightBlue'],
+    1: ['Brown','Black','Red','Blue','Green'],
+    2: ['White', 'Red', 'Blue', 'Green'],
+    3: ['Black','Red','Blue','Green'],
+    4: ['Pink','Yellow','Blue','Red','Green','Black'],
+    5: ['Green','Red','Blue','Black'],
+    6: ['Green','Red','Blue','Black','White'],
+    7: ['Green','White','LightBlue','Pink'],
+    8: ['Red','Yellow','Black','Blue','Green'],
+    9: ['Blue','Red','Green','Black','White'],
+    10: ['Purple','Yellow','Blue','Green'],
+    11: ['Red','Yellow','Blue','Green'],
+    12: ['Pink','Yellow','White','Blue','Green'],
+    13: ['Yellow','Red','Blue','Green'],
+    14: ['Blue','Green','orange','Red'],
+    15: ['Pink','Red','Blue','Green','Yellow'],
+    16: ['orange','Pink','Brown','Green','Purple'],
+    17: ['Green','Red','Blue','Yellow','Pink','LightBlue'],
+    18: ['Pink','Red','Blue','Green','Purple'],
+    19: ['Blue','Red','LightBlue','Green','Blue'],
+    20: ['White','Red','Blue','Green'],
+    21: ['Green','Red','Blue','White','Black'],
+    22: ['White','Pink','LightBlue','Green','Black'],
+    23: ['LightBlue','Red','Blue','Green','Yellow'],
+    24: ['Yellow','Red','Blue','Green'],
+    25: ['Brown','Red','Blue','Green','Purple'],
+  };
+
   let colorLength = charColorLengthDict[charId];
 
   charColorsArr[charId] = charColorsArr[charId].slice(0, colorLength);
 
   let charImage = [];
   let colorData = [];
+  let borderColor = [];
+  let backgroundColor = [];
+  let labels = [];
 
   for (let i = 0; i < charColorsArr[charId].length; i++) {
     charImage.push(`${charId}/${i}.png`);
     colorData.push(charColorsArr[charId][i]);
+
+    var color = charColorDict[charId][i].toUpperCase()
+    backgroundColor.push(colorChartDict[color][0]);
+
+    borderColor.push(colorChartDict[color][1])
   }
+  labels = (charColorDict[charId]);
 
   // console.log(colorData)
   // console.log(charImage)
 
   return (
-    <ColorBarChart colorData={colorData} charImage={charImage} title={title} />
+    <ColorBarChart colorData={colorData} labels = {labels} borderColor = {borderColor} backgroundColor = {backgroundColor} charImage={charImage} title={title} />
   );
 }
 
@@ -1182,7 +1236,9 @@ export default class Secret extends Component {
   }
 
   render() {
-    const { globalStats, P1vsP2, P1vsGlobal, P1vsFirstBlood } = this.state;
+    const { globalStats, P1vsP2, P1vsGlobal, 
+      //P1vsFirstBlood 
+    } = this.state;
 
     return (
       <div className='container mt-3'>
@@ -1216,14 +1272,14 @@ export default class Secret extends Component {
                 </div>  
               </div>
 
-              <div>                
-                <h3 id='searchParams'>Data from {this.state.gamesTotal ? this.state.gamesTotal : '------'} Matches 
-                and {this.state.playersTotal ? this.state.playersTotal : '-----'}  Unique Players!</h3>
-                <h3 id='searchParams'>{displayTime(this.state.globalStats.globalFrames)} of Melee Played!</h3>
+              <div>   
+                <h3 id='searchParams'>Data from {this.state.gamesTotal ? this.state.gamesTotal.toLocaleString() : '------'} Matches 
+                and {this.state.playersTotal ? this.state.playersTotal.toLocaleString() : '-----'}  Unique Players!</h3>
+                <h3 id='searchParams'>{displayTime(this.state.globalStats.globalFrames)} of Melee played!</h3>
                 <h3 id='searchParams'>
-                  &nbsp; {this.state.globalStats.globalFalcoLasers} 
+                  &nbsp; {this.state.globalStats.globalFalcoLasers.toLocaleString()} 
           
-          &nbsp;Falco Lasers Hit..    &nbsp;
+          &nbsp;Falco Lasers landed..    &nbsp;
           <img
             src={`stock_icons/Falco.png`}
             height='30px'
@@ -1311,9 +1367,8 @@ export default class Secret extends Component {
                     }}
                     options={this.state.selectCharacters}
                     onChange={this.myCharChange.bind(this)}
-                    placeholder='Characters'
-                  />
-                  <hr></hr>
+                    placeholder='Character'
+                  />             
                 </div>
               </div>
 
@@ -1337,7 +1392,7 @@ export default class Secret extends Component {
                 </div>
               </div>
 
-              <div className='row'>
+              {/* <div className='row'>
                 <div className='col-lg-12 globalstats'>
                   <div className='chartDiv'>
                     {createBarChartCharacterWinrate(
@@ -1355,6 +1410,21 @@ export default class Secret extends Component {
                   </div>
                   <hr></hr>
                 </div>
+              </div> */}
+
+              <div className='row'>
+                <div className='col-lg-12 globalSelectBoxDiv'>              
+                  <Select
+                    className='selectBox globalSelectBox'
+                    menuPortalTarget={document.body}
+                    styles={{
+                      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                    }}
+                    options={this.state.selectCharacters}
+                    onChange={this.myCharChange.bind(this)}
+                    placeholder='Character'
+                  />                  
+                </div>
               </div>
 
               <div className='row'>
@@ -1371,6 +1441,21 @@ export default class Secret extends Component {
                     )}
                   </div>
                   <hr></hr>
+                </div>
+              </div>
+
+              <div className='row'>
+                <div className='col-lg-12 globalSelectBoxDiv'>              
+                  <Select
+                    className='selectBox globalSelectBox'
+                    menuPortalTarget={document.body}
+                    styles={{
+                      menuPortal: (base) => ({ ...base, zIndex: 9999 }),
+                    }}
+                    options={this.state.selectCharacters}
+                    onChange={this.myCharChange.bind(this)}
+                    placeholder='Character'
+                  />                 
                 </div>
               </div>
 

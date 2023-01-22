@@ -102,8 +102,8 @@ export default class AddMatch extends Component {
                 <h1 className="title-text">Chart.slp | Slippi Charts</h1>
                 <p className="title-text">This website is designed to provide simple and interactive charts for analyzing your Slippi Online games.</p>
                
-                <h3>{this.state.gamesTotal ? this.state.gamesTotal : '------'} Matches Uploaded!</h3>
-                <h3>{this.state.playersTotal ? this.state.playersTotal : '-----'} Unique Players!</h3>
+                <h3>{this.state.gamesTotal ? this.state.gamesTotal.toLocaleString() : '------'} Matches Uploaded!</h3>
+                <h3>{this.state.playersTotal ? this.state.playersTotal.toLocaleString() : '-----'} Unique Players!</h3>
                 {/* <p className="title-text">Powered by Chart.js + Slippi-js</p> */}
                 <a href="/charts" className="btn btn-light " role="button">GENERATE CHARTS</a>
                 <a href='/global' className="btn btn-outline-light " role="button">GLOBAL STATS</a>
