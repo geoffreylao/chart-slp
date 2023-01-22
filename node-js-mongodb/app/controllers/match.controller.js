@@ -1586,27 +1586,43 @@ exports.getAllMatches = (req, res) => {
 
   let charQuitout = Array(26).fill(0); // vs what char
 
+  let charFirstBloodWins = Array.from(
+    { length: 26 }, // char
+    (e) =>
+      Array(26).fill(0)
+  ); 
+  
+  let charFirstBloodLoss = Array.from(
+    { length: 26 }, // char
+    (e) =>
+      Array(26).fill(0)
+  ); 
+
+  let falcoLasers = 0;
+  let myFrames = 0;
+  
+
   function accumulateGlobalStats(res) {
     for (let i = 0; i < res.players.length; i++) {
       let oppIndex = i === 0 ? 1 : 0;
 
+      let validStage = [2,3,8,28,31,32];
+
       if (
         res.players[0].characterId <= 25 &&
-        res.players[1].characterId <= 25
+        res.players[1].characterId <= 25 && validStage.includes(res.settings.stageId)
       ) {
         characterUsage[res.players[i].characterId]++;
         charColor[res.players[i].characterId][res.players[i].characterColor]++;
 
         if (res.metadata.winner === res.players[i].code) {
           try {
-            charStageWins[res.players[i].characterId][
-              res.players[oppIndex].characterId
-            ][res.settings.stageId]++;
-            charStageLoss[res.players[oppIndex].characterId][
-              res.players[i].characterId
-            ][res.settings.stageId]++;
+            charStageWins[res.players[i].characterId][res.players[oppIndex].characterId][res.settings.stageId]++;
+            charStageLoss[res.players[oppIndex].characterId][res.players[i].characterId][res.settings.stageId]++;
+            charFirstBloodWins[res.players[i].characterId][res.players[oppIndex].characterId]++;
+            charFirstBloodLoss[res.players[oppIndex].characterId][res.players[i].characterId]++;
           } catch (error) {
-            console.log(res.matchid);
+            console.log("errro: " + res.matchid);
             //console.log(error)
           }
         }
@@ -1617,62 +1633,79 @@ exports.getAllMatches = (req, res) => {
         ) {
           charQuitout[res.players[i].characterId]++;
         }
+
+        myFrames += res.metadata.lastFrame;
+        
+        for (let i = 0; i < res.players.length; i++) {
+          if(res.players[i].characterId === 20){
+            for (let j = 0; j < res.players[i].conversions.length; j++) {
+              for (let k = 0; k < res.players[i].conversions[j].moves.length; k++) {
+                if(res.players[i].conversions[j].moves[k].moveId === 18){
+                  falcoLasers++;
+                }            
+              }
+            }
+          }      
+        }
       }
+
     }
   }
 
   console.log('starting global');
   console.time('global');
 
-  for await(const doc of Match.find({
-          players: { $elemMatch: { characterString: { $in: chararr } } },
-          'settings.stageString': { $in: stagearr },
-        })
-          .lean()){
-            accumulateGlobalStats(doc);
-          }
-  // co(function* () {
-  //   var docCount = 0;
-  //   var count = 0;
-  //   var limit = 5000;
-  //   var skip = 0;
+  // for await(const doc of Match.find({
+  //         players: { $elemMatch: { characterString: { $in: chararr } } },
+  //         'settings.stageString': { $in: stagearr },
+  //       })
+  //         .lean()){
+  //           accumulateGlobalStats(doc);
+  //         }
 
-  //   do {
-  //     const cursor = Match.find({
-  //       players: { $elemMatch: { characterString: { $in: chararr } } },
-  //       'settings.stageString': { $in: stagearr },
-  //     })
-  //       .lean()
-  //       .skip(skip)
-  //       .limit(limit)
-  //       .cursor();
+  co(function* () {
+    var docCount = 0;
+    var count = 0;
+    var limit = 5000;
+    var skip = 0;
 
-  //     // console.log('do count: ' + count)
-  //     // console.log('skip: ' + skip)
-  //     docCount = 0;
+    do {
+      const cursor = Match.find({
+        players: { $elemMatch: { characterString: { $in: chararr } } },
+        'settings.stageString': { $in: stagearr },
+      })
+        .lean()
+        .skip(skip)
+        .limit(limit)
+        .cursor();
 
-  //     //for (let doc = yield cursor.next(); doc != null; doc = yield cursor.next()) {
-  //     // docCount++;
-  //     // accumulateGlobalStats(doc);
-  //     //}
+      // console.log('do count: ' + count)
+      // console.log('skip: ' + skip)
+      docCount = 0;
+
+      for (let doc = yield cursor.next(); doc != null; doc = yield cursor.next()) {
+      docCount++;
+      accumulateGlobalStats(doc);
+      }
 
    
 
-  //     //console.log(docCount)
+      //console.log(docCount)
 
-  //     if (count === 0 && docCount === 0) {
-  //       console.log('no matches');
+      if (count === 0 && docCount === 0) {
+        console.log('no matches');
 
-  //       res.send('fail');
+        res.send('fail');
 
-  //       return;
-  //     }
+        return;
+      }
 
-  //     count++;
-  //     skip = count * limit;
-  //   } while (docCount !== 0);
+      count++;
+      skip = count * limit;
+    } while (docCount !== 0);
 
     //res.end("complete")
+
 
     console.log('on end global');
 
@@ -1690,6 +1723,7 @@ exports.getAllMatches = (req, res) => {
       charWinrate[i] = charWins[i] / (charWins[i] + charLoss[i]);
     }
 
+   
     console.log('creating global res obj');
 
     let globalStats = {
@@ -1701,13 +1735,17 @@ exports.getAllMatches = (req, res) => {
       globalCharColor: charColor,
       gloabalCharStageWins: charStageWins,
       globalCharStageLoss: charStageLoss,
+      globalCharFirstBloodWins: charFirstBloodWins,
+      globalCharFirstBloodLoss: charFirstBloodLoss,
+      globalFalcoLasers: falcoLasers,
+      globalFrames: myFrames
     };
 
     console.log('global stats gotten');
     console.timeEnd('global');
     res.end(JSON.stringify(globalStats));
     //res.send(globalStats)
-  //});
+  });
 };
 
 exports.uploadSingle = (req, res) => {
