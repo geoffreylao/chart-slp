@@ -9,7 +9,7 @@ import StageBarChart from './charts/stage-bar-chart.component';
 import Donut from './charts/donut-chart.component';
 
 import Container from 'react-bootstrap/Container';
-import ColorBarChart from './charts/color-bar-chart.component';
+import ColorBarChart from './charts/color-bar-chart-secret.component';
 
 import MatchDataService from "../services/match.service";
 var globalObjModule = require('./global-stats-secret.js');
