@@ -1279,7 +1279,7 @@ export default class Secret extends Component {
                 <h3 id='searchParams'>
                   &nbsp; {this.state.globalStats.globalFalcoLasers.toLocaleString()} 
           
-          &nbsp;Falco Lasers landed..    &nbsp;
+          &nbsp;Falco Lasers landed and counting..    &nbsp;
           <img
             src={`stock_icons/Falco.png`}
             height='30px'
