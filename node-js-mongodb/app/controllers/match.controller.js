@@ -1619,11 +1619,28 @@ exports.getAllMatches = (req, res) => {
           try {
             charStageWins[res.players[i].characterId][res.players[oppIndex].characterId][res.settings.stageId]++;
             charStageLoss[res.players[oppIndex].characterId][res.players[i].characterId][res.settings.stageId]++;
-            charFirstBloodWins[res.players[i].characterId][res.players[oppIndex].characterId]++;
-            charFirstBloodLoss[res.players[oppIndex].characterId][res.players[i].characterId]++;
+            
+           
           } catch (error) {
             console.log("errro: " + res.matchid);
             //console.log(error)
+          }
+        }
+
+        if(res.metadata.firstBlood === res.players[i].code){
+          try{
+              if(res.metadata.winner === res.players[i].code){
+                try {
+                  charFirstBloodWins[res.players[i].characterId][res.players[oppIndex].characterId]++;
+                  charFirstBloodLoss[res.players[oppIndex].characterId][res.players[i].characterId]++;                                   
+                } catch (error) {
+                  console.log("errro: " + res.matchid);
+                  //console.log(error)
+                }
+
+              }
+          }catch(error){
+            console.log("error: " + res.matchid)
           }
         }
 
