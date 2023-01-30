@@ -5,7 +5,7 @@ import "./App.css";
 
 import AddMatch from "./components/add-match.component";
 import MatchStats from "./components/match-stats.component";
-import GlobalStats from "./components/global-stats.component";
+//import GlobalStats from "./components/global-stats.component";
 import Secret from "./components/global-stats-secret.component";
 
 import { Navbar, Nav } from 'react-bootstrap';
@@ -40,7 +40,7 @@ class App extends Component {
           <Switch>
             <Route exact path={"/charts"} component={MatchStats} />
             <Route exact path={["/", "/add"]} component={AddMatch} />
-            <Route exact path={["/global"]} component={GlobalStats} />
+            <Route exact path={["/global"]} component={Secret} />
             <Route exact path={["/secret"]} component={Secret}/>
           </Switch>
         </div>

@@ -1237,7 +1237,7 @@ export default class Secret extends Component {
 
   render() {
     const { globalStats, P1vsP2, P1vsGlobal, 
-      //P1vsFirstBlood 
+      P1vsFirstBlood 
     } = this.state;
 
     return (
@@ -1392,7 +1392,7 @@ export default class Secret extends Component {
                 </div>
               </div>
 
-              {/* <div className='row'>
+              <div className='row'>
                 <div className='col-lg-12 globalstats'>
                   <div className='chartDiv'>
                     {createBarChartCharacterWinrate(
@@ -1405,12 +1405,12 @@ export default class Secret extends Component {
                         .replace(
                           'stock_icons/',
                           ''
-                        )} First Blood vs Character Winrate %`
+                        )} Win % After Taking First Stock`
                     )}
                   </div>
                   <hr></hr>
                 </div>
-              </div> */}
+              </div>
 
               <div className='row'>
                 <div className='col-lg-12 globalSelectBoxDiv'>              
