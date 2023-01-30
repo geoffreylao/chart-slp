@@ -130,7 +130,7 @@ export default class AddMatch extends Component {
                     </div>
                     <div className="form-group">
                       <button className="btn btn-secondary" type="submit" 
-                      disabled
+                     // disabled
                       >UPLOAD</button>
                     </div>
                   </form>
