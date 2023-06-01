@@ -1,11 +1,11 @@
 import React, {
   Component,
- // useState
+ useState
 } from 'react'; //useState
 import MatchDataService from '../services/match.service';
 import ReactSpinner from 'react-bootstrap-spinner';
 import Select from 'react-select';
-//import Alert from 'react-bootstrap/Alert';
+import Alert from 'react-bootstrap/Alert';
 
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
@@ -1162,19 +1162,22 @@ function createSuccessWhiffBarChart(
   );
 }
 
-// function AlertDismissible() {
-//   const [show, setShow] = useState(true);
+function AlertDismissible() {
+  const [show, setShow] = useState(true);
 
-//     return (
-//       <Alert variant="secondary" show={show} onClose={() => setShow(false)} dismissible>
-//         <p>
-//         Match uploads are temporarliy paused, sorry for the inconvenience!
-
-//         </p>
-//       </Alert>
-//     );
-
-// }
+  return (
+    <Alert
+      variant='secondary'
+      show={show}
+      onClose={() => setShow(false)}
+      dismissible
+    >
+      <p className='alert'>
+        Database is down for maitenance! Sorry for the inconvenience!
+      </p>
+    </Alert>
+  );
+}
 
 // function AlertDismissible() {
 //   const [show, setShow] = useState(true);
@@ -2336,7 +2339,7 @@ export default class MatchStats extends Component {
       <div className='container mt-3'>
         <div className='list row'>
           <div className='col-md-12'>
-            {/* <AlertDismissible/> */}
+            <AlertDismissible/>
             <Card>
               <Card.Body>
                 <h2 id='searchParams'>Search</h2>
