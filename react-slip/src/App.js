@@ -3,10 +3,10 @@ import { Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import AddMatch from "./components/add-match.component";
-import MatchStats from "./components/match-stats.component";
+// import AddMatch from "./components/add-match.component";
+// import MatchStats from "./components/match-stats.component";
 //import GlobalStats from "./components/global-stats.component";
-import Secret from "./components/global-stats-secret.component";
+// import Secret from "./components/global-stats-secret.component";
 import SiteClose from "./components/site-close.component"
 
 // import { Navbar, Nav } from 'react-bootstrap';
