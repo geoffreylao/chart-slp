@@ -294,12 +294,19 @@ a:hover {
   width: 40%;
 }
 
+.logo {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center;     /* Vertical centering */
+}
+
 .container-fluid {
   padding: 0;
 }
 
 .title-text {
   font-weight: 600;
+  text-align: center;
 }
 
 h1 {
@@ -307,7 +314,7 @@ h1 {
 }
 
 .btn {
-  width: 150px;
+  width: 350px;
   margin: 10px;
   font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
   font-size: 0.85rem;

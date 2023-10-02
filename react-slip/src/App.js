@@ -7,14 +7,15 @@ import AddMatch from "./components/add-match.component";
 import MatchStats from "./components/match-stats.component";
 //import GlobalStats from "./components/global-stats.component";
 import Secret from "./components/global-stats-secret.component";
+import SiteClose from "./components/site-close.component"
 
-import { Navbar, Nav } from 'react-bootstrap';
+// import { Navbar, Nav } from 'react-bootstrap';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Navbar variant="dark" bg="secondary" expand="lg">
+        {/* <Navbar variant="dark" bg="secondary" expand="lg">
           <Navbar.Brand href="/">          
             <img src="slippicharts.png" className="img-fluid" width="48" height="48" alt="slippicharts logo"/>
                   Chart.slp
@@ -34,12 +35,13 @@ class App extends Component {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
-        </Navbar>
+        </Navbar> */}
 
         <div className="container-fluid">
           <Switch>
+            <Route exact path={["/"]} component={SiteClose} />
             <Route exact path={"/charts"} component={MatchStats} />
-            <Route exact path={["/", "/add"]} component={AddMatch} />
+            <Route exact path={["/add"]} component={AddMatch} />
             <Route exact path={["/global"]} component={Secret} />
             <Route exact path={["/secret"]} component={Secret}/>
           </Switch>
