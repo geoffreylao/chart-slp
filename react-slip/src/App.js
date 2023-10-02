@@ -40,10 +40,10 @@ class App extends Component {
         <div className="container-fluid">
           <Switch>
             <Route exact path={["/"]} component={SiteClose} />
-            <Route exact path={"/charts"} component={MatchStats} />
+            {/* <Route exact path={"/charts"} component={MatchStats} />
             <Route exact path={["/add"]} component={AddMatch} />
             <Route exact path={["/global"]} component={Secret} />
-            <Route exact path={["/secret"]} component={Secret}/>
+            <Route exact path={["/secret"]} component={Secret}/> */}
           </Switch>
         </div>
       </div>
